@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_courses"
+            android:icon="@android:drawable/ic_dialog_dialer"
+            android:title="Mis Cursos" />
+        <item
+            android:id="@+id/nav_rubrics"
+            android:icon="@android:drawable/ic_menu_edit"
+            android:title="Mis Rubricas" />
+    </group>
+
+</menu>
