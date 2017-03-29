@@ -10,7 +10,6 @@ import java.util.List;
 
 public class Rubric extends SugarRecord {
 
-    int activity_id;
     String name;
 
     List<Category> categories() {
@@ -20,8 +19,15 @@ public class Rubric extends SugarRecord {
     public Rubric() {
     }
 
-    public Rubric(int activity_id, String name) {
-        this.activity_id = activity_id;
+    public Rubric(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 }
