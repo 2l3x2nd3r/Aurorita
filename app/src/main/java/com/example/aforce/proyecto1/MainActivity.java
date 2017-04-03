@@ -101,8 +101,8 @@ public class MainActivity extends AppCompatActivity
                 break;
             case 1: //CREAR CURSO
                 fab.setVisibility(View.INVISIBLE);
-
                 //fragment = new CreateCourseView();
+                fragment = new CreateCourse();
                 break;
             case 2: //VER CURSO
                 fab.setTag("");
