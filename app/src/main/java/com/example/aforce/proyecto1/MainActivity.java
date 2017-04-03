@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         SugarContext.init(this);
-        displaySelectedScreen(R.id.nav_rubrics);
+        displaySelectedScreen(R.id.nav_courses);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         switch (id){
             case R.id.nav_courses:
-                fragment = new RubricView();
+                fragment = new CourseView();
                 break;
             case R.id.nav_rubrics:
                 fragment = new RubricView();

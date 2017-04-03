@@ -17,12 +17,12 @@ public class CourseView extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().setTitle("Rubricas");
+        getActivity().setTitle("Cursos");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.rubric_view, container, false);
+        return inflater.inflate(R.layout.courses_view, container, false);
     }
 }
