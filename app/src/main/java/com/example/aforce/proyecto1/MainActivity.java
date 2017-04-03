@@ -45,12 +45,21 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        fab.setVisibility(View.VISIBLE);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            int count = getFragmentManager().getBackStackEntryCount();
+
+            if (count == 0) {
+                super.onBackPressed();
+                //additional code
+            } else {
+                getFragmentManager().popBackStack();
+            }
         }
+
     }
 
     @Override
@@ -93,7 +102,7 @@ public class MainActivity extends AppCompatActivity
         switch (id){
             case R.id.nav_courses:
                 fab.setTag("newCourse");
-                fragment = new CourseView();
+                fragment = new CoursesView();
                 break;
             case R.id.nav_rubrics:
                 fab.setTag("newRubric");
@@ -101,17 +110,17 @@ public class MainActivity extends AppCompatActivity
                 break;
             case 1: //CREAR CURSO
                 fab.setVisibility(View.INVISIBLE);
-                //fragment = new CreateCourseView();
-                fragment = new CreateCourse();
+                fragment = new CreateCourseView();
                 break;
             case 2: //VER CURSO
-                fab.setTag("");
+                fab.setTag("showCourse");
+                fragment = new ShowCourseView();
                 break;
         }
 
         if(fragment != null){
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(R.id.content_main, fragment);
+            ft.replace(R.id.content_main, fragment).addToBackStack("tag");
             ft.commit();
         }
 
@@ -128,5 +137,20 @@ public class MainActivity extends AppCompatActivity
         displaySelectedScreen(id);
 
         return true;
+    }
+
+    public void showCard(View view) {
+        String info[] = ((String) view.getTag()).split("-");
+
+        switch (info[0]){
+            case "Course":
+                displaySelectedScreen(2);
+                break;
+
+            case "Rubric":
+
+                break;
+        }
+
     }
 }

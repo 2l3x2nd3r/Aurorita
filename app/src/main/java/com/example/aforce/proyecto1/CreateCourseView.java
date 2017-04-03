@@ -11,7 +11,7 @@ import android.view.ViewGroup;
  * Created by mauricio on 3/04/17.
  */
 
-public class CreateCourse  extends Fragment {
+public class CreateCourseView extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -22,6 +22,6 @@ public class CreateCourse  extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.create_courses, container, false);
+        return inflater.inflate(R.layout.create_courses_view, container, false);
     }
 }
