@@ -79,11 +79,10 @@ public class MainActivity extends AppCompatActivity
         Toast.makeText(getApplicationContext(), "" + view.getTag(), Toast.LENGTH_SHORT).show();
         switch ("" + view.getTag()){
             case "newCourse":
-                RubricView.hola();
+                displaySelectedScreen(1);
                 break;
-
             case "newRubric":
-
+                
                 break;
         }
     }
@@ -100,9 +99,13 @@ public class MainActivity extends AppCompatActivity
                 fab.setTag("newRubric");
                 fragment = new RubricView();
                 break;
-            case 1: //CREAR COURSO
+            case 1: //CREAR CURSO
                 fab.setVisibility(View.INVISIBLE);
+
                 //fragment = new CreateCourseView();
+                break;
+            case 2: //VER CURSO
+                fab.setTag("");
                 break;
         }
 
