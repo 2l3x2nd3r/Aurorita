@@ -18,6 +18,9 @@ public class CourseView extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         getActivity().setTitle("Cursos");
+
+
+
     }
 
     @Nullable

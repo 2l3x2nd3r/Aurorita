@@ -1,6 +1,7 @@
 package com.example.aforce.proyecto1;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
@@ -19,6 +20,8 @@ import com.orm.SugarContext;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    FloatingActionButton fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +34,8 @@ public class MainActivity extends AppCompatActivity
             this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -70,18 +75,34 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void createRubric(View view) {
-        Toast.makeText(getApplicationContext(), "Hola", Toast.LENGTH_SHORT).show();
+    public void bindAction(View view) {
+        Toast.makeText(getApplicationContext(), "" + view.getTag(), Toast.LENGTH_SHORT).show();
+        switch ("" + view.getTag()){
+            case "newCourse":
+                RubricView.hola();
+                break;
+
+            case "newRubric":
+
+                break;
+        }
     }
 
     private void displaySelectedScreen(int id){
         Fragment fragment = null;
+        fab.setVisibility(View.VISIBLE);
         switch (id){
             case R.id.nav_courses:
+                fab.setTag("newCourse");
                 fragment = new CourseView();
                 break;
             case R.id.nav_rubrics:
+                fab.setTag("newRubric");
                 fragment = new RubricView();
+                break;
+            case 1: //CREAR COURSO
+                fab.setVisibility(View.INVISIBLE);
+                //fragment = new CreateCourseView();
                 break;
         }
 

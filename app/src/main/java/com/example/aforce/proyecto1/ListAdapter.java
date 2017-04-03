@@ -12,9 +12,6 @@ import com.example.aforce.proyecto1.models.Course;
 import com.example.aforce.proyecto1.models.Rubric;
 import com.orm.SugarRecord;
 
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Created by AForce on 26/03/2017.
  */
