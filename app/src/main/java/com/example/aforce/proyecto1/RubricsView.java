@@ -9,11 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.aforce.proyecto1.models.Rubric;
+import com.raizlabs.android.dbflow.sql.language.Select;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by AForce on 24/03/2017.
  */
 
-public class RubricView extends Fragment {
+public class RubricsView extends Fragment {
 
     CardView cv;
     ListView lv;
@@ -28,24 +35,26 @@ public class RubricView extends Fragment {
         cv = (CardView) view.findViewById(R.id.cvNoContent);
         lv = (ListView) view.findViewById(R.id.lvRubrics);
 
-        /*SugarRecord records[] = new SugarRecord[1];
-        for (int i = 0; i < 1; i++) {
-            records[i] = new Rubric("Hola");
+        ArrayList<BaseModel> records = new ArrayList<BaseModel>();
+
+        List<Rubric> list = new Select().from(Rubric.class).queryList();
+
+        for (int i = 0; i < list.size(); i++){
+            records.add(list.get(i));
         }
 
+        if(records.isEmpty()){
+            cv.setVisibility(View.VISIBLE);
+        }
         adapter = new ListAdapter(getContext(), records);
         lv.setDivider(null);
-        lv.setAdapter(adapter);*/
+        lv.setAdapter(adapter);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.rubric_view, container, false);
+        return inflater.inflate(R.layout.rubrics_view, container, false);
     }
 
-
-    public static void hola(){
-
-    }
 }

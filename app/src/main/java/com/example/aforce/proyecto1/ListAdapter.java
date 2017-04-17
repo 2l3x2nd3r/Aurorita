@@ -61,7 +61,7 @@ public class ListAdapter extends BaseAdapter{
         switch (sr.getClass().getSimpleName()){
             case "Rubric":
                 Rubric Robj = (Rubric) sr;
-                tvRow.setText(""+Robj.getName());
+                tvRow.setText(""+Robj.name);
                 cardRow.setTag(Robj.getId());
                 break;
             case "Course":

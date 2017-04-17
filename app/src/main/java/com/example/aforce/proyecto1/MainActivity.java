@@ -1,7 +1,6 @@
 package com.example.aforce.proyecto1;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -27,8 +26,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    FloatingActionButton fab;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,8 +40,6 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         FlowManager.init(new FlowConfig.Builder(this).openDatabasesOnInit(true).build());
-
-        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         Activity a = new Activity("hola", 1,  1);
         a.save();
@@ -63,7 +58,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        fab.setVisibility(View.VISIBLE);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -102,37 +96,22 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void bindAction(View view) {
-        Toast.makeText(getApplicationContext(), "" + view.getTag(), Toast.LENGTH_SHORT).show();
-        switch ("" + view.getTag()){
-            case "newCourse":
-                displaySelectedScreen(1);
-                break;
-            case "newRubric":
-                
-                break;
-        }
-    }
-
     private void displaySelectedScreen(int id){
         Fragment fragment = null;
-        fab.setVisibility(View.VISIBLE);
         switch (id){
             case R.id.nav_courses:
-                fab.setTag("newCourse");
                 fragment = new CoursesView();
                 break;
             case R.id.nav_rubrics:
-                fab.setTag("newRubric");
-                fragment = new RubricView();
+                fragment = new RubricsView();
                 break;
             case 1: //CREAR CURSO
-                fab.setVisibility(View.INVISIBLE);
                 fragment = new CreateCourseView();
                 break;
             case 2: //VER CURSO
-                fab.setTag("showCourse");
                 fragment = new ShowCourseView();
+                break;
+            case 11:
                 break;
         }
 
@@ -157,23 +136,12 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void showCard(View view) {
-        String info[] = ((String) view.getTag()).split("-");
-
-        switch (info[0]){
-            case "Course":
-                displaySelectedScreen(2);
-                break;
-
-            case "Rubric":
-
-                break;
-        }
-
-    }
-
     public void onClickCreateCourse(View view) {
         EditText et = (EditText) findViewById(R.id.etCourseName);
         Course c = new Course(et.getText().toString());
+    }
+
+    public void onClickCreateRubricView(View view) {
+        Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
     }
 }
