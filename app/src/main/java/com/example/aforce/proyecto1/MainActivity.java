@@ -27,8 +27,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    FloatingActionButton fab;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,18 +42,6 @@ public class MainActivity extends AppCompatActivity
 
         FlowManager.init(new FlowConfig.Builder(this).openDatabasesOnInit(true).build());
 
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-
-        Activity a = new Activity("hola", 1,  1);
-        a.save();
-
-        List<Activity> list = new Select().from(Activity.class).queryList();
-
-        for (int i = 0; i < list.size(); i++){
-            Activity item = list.get(i);
-            Toast.makeText(this, item.toString(), Toast.LENGTH_SHORT).show();
-        }
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         displaySelectedScreen(R.id.nav_courses);
@@ -63,7 +49,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        fab.setVisibility(View.VISIBLE);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -116,24 +101,20 @@ public class MainActivity extends AppCompatActivity
 
     private void displaySelectedScreen(int id){
         Fragment fragment = null;
-        fab.setVisibility(View.VISIBLE);
         switch (id){
             case R.id.nav_courses:
-                fab.setTag("newCourse");
                 fragment = new CoursesView();
                 break;
             case R.id.nav_rubrics:
-                fab.setTag("newRubric");
                 fragment = new RubricView();
                 break;
             case 1: //CREAR CURSO
-                fab.setVisibility(View.INVISIBLE);
                 fragment = new CreateCourseView();
                 break;
             case 2: //VER CURSO
-                fab.setTag("showCourse");
                 fragment = new ShowCourseView();
                 break;
+            case 3:
         }
 
         if(fragment != null){
@@ -171,9 +152,22 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+    //---------------------Display things---------------//
+
+    public void onClickShowCreateCourse(View view) {
+        displaySelectedScreen(1);
+    }
+
+    //--------------------------------------------------//
+
+    //---------------------Create things----------------//
 
     public void onClickCreateCourse(View view) {
         EditText et = (EditText) findViewById(R.id.etCourseName);
         Course c = new Course(et.getText().toString());
+        c.save();
+        displaySelectedScreen(R.id.nav_courses);
     }
+
+    //--------------------------------------------------//
 }
