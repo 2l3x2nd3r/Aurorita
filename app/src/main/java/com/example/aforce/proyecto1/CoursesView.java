@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.aforce.proyecto1.models.Course;
-import com.example.aforce.proyecto1.models.Rubric;
 import com.orm.SugarRecord;
 
 /**
@@ -32,12 +31,13 @@ public class CoursesView extends Fragment {
         cv = (CardView) view.findViewById(R.id.cvNoContent);
         lv = (ListView) view.findViewById(R.id.lvCourses);
 
-        SugarRecord records[] = new SugarRecord[1];
+        /*SugarRecord records[] = new SugarRecord[1];
         for (int i = 0; i < 1; i++) {
             records[i] = new Course("Hola");
-        }
+        }*/
 
-        adapter = new ListAdapter(getContext(), records);
+        SugarRecord courses[] = (SugarRecord[]) Course.listAll(Course.class).toArray();
+        adapter = new ListAdapter(getContext(), courses);
         lv.setDivider(null);
         lv.setAdapter(adapter);
     }

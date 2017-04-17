@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
-        android:hint="Nombre"/>
+        android:hint="Nombre"
+        android:id="@+id/etCourseName"/>
 
     <!-- Other views -->
     <Space
@@ -20,6 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Crear" />
+        android:text="Crear"
+        android:onClick="onClickCreateCourse"/>
 
 </LinearLayout>

@@ -19,6 +19,7 @@ public class CreateCourseView extends Fragment {
         getActivity().setTitle("Crear curso");
     }
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

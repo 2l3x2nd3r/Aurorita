@@ -13,8 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.aforce.proyecto1.models.Course;
 import com.orm.SugarContext;
 
 public class MainActivity extends AppCompatActivity
@@ -152,5 +154,11 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
 
+    }
+
+    public void onClickCreateCourse(View view) {
+        EditText et = (EditText) findViewById(R.id.etCourseName);
+        Course c = new Course(et.getText().toString());
+        c.save();
     }
 }
