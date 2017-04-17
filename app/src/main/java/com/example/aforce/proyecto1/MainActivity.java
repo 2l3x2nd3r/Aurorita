@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.aforce.proyecto1.models.Course;
-import com.orm.SugarContext;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -41,7 +40,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        SugarContext.init(this);
         displaySelectedScreen(R.id.nav_courses);
     }
 
@@ -159,6 +157,5 @@ public class MainActivity extends AppCompatActivity
     public void onClickCreateCourse(View view) {
         EditText et = (EditText) findViewById(R.id.etCourseName);
         Course c = new Course(et.getText().toString());
-        c.save();
     }
 }

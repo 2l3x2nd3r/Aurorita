@@ -9,9 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.aforce.proyecto1.models.Course;
-import com.orm.SugarRecord;
-
 /**
  * Created by AForce on 25/03/2017.
  */
@@ -34,12 +31,12 @@ public class CoursesView extends Fragment {
         /*SugarRecord records[] = new SugarRecord[1];
         for (int i = 0; i < 1; i++) {
             records[i] = new Course("Hola");
-        }*/
+        }
 
-        SugarRecord courses[] = (SugarRecord[]) Course.listAll(Course.class).toArray();
+
         adapter = new ListAdapter(getContext(), courses);
         lv.setDivider(null);
-        lv.setAdapter(adapter);
+        lv.setAdapter(adapter);*/
     }
 
     @Nullable

@@ -8,10 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.example.aforce.proyecto1.models.Course;
-import com.example.aforce.proyecto1.models.Rubric;
-import com.orm.SugarRecord;
-
 /**
  * Created by AForce on 26/03/2017.
  */
@@ -19,14 +15,14 @@ import com.orm.SugarRecord;
 public class ListAdapter extends BaseAdapter{
 
     private Context context;
-    SugarRecord data[];
+    String data[];
 
-    public ListAdapter(Context context, SugarRecord[] data) {
+    public ListAdapter(Context context, String[] data) {
         this.context = context;
         this.data = data;
     }
 
-    public void setData(SugarRecord[] data) {
+    public void setData(String[] data) {
         this.data = data;
     }
 
@@ -54,7 +50,7 @@ public class ListAdapter extends BaseAdapter{
 
         TextView tvRow = (TextView) view.findViewById(R.id.tvRow);
         CardView cardRow = (CardView) view.findViewById(R.id.cardRow);
-
+        /*
         SugarRecord sr = (SugarRecord) getItem(position);
         switch (sr.getClass().getSimpleName()){
             case "Rubric":
@@ -67,7 +63,7 @@ public class ListAdapter extends BaseAdapter{
                 tvRow.setText(""+Cobj.getName());
                 cardRow.setTag("Course-" + Cobj.getId());
                 break;
-        }
+        }*/
 
         return view;
     }
