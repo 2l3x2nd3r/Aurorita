@@ -17,8 +17,7 @@ import android.widget.Toast;
 
 import com.example.aforce.proyecto1.Controllers.Course.CoursesView;
 import com.example.aforce.proyecto1.Controllers.Course.CreateCourseView;
-import com.example.aforce.proyecto1.Controllers.Course.ShowCourseView;
-import com.example.aforce.proyecto1.Controllers.Rubric.CreateRubricView;
+import com.example.aforce.proyecto1.Controllers.Course.StudentsActivitiesContainer;
 import com.example.aforce.proyecto1.Controllers.Rubric.RubricsView;
 import com.example.aforce.proyecto1.models.Course;
 import com.raizlabs.android.dbflow.config.FlowConfig;
@@ -100,16 +99,14 @@ public class MainActivity extends AppCompatActivity
                 fragment = new CreateCourseView();
                 break;
             case 2: //VER CURSO
-                fragment = new ShowCourseView();
+                fragment = new StudentsActivitiesContainer();
                 //buscar como pasar el itemId al fragment
                 break;
             case 3:
                 break;
             case 11:
-                fragment = new CreateRubricView();
+                Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
                 break;
-            case 12:
-                 break;
         }
 
         if(fragment != null){
@@ -141,7 +138,7 @@ public class MainActivity extends AppCompatActivity
                 displaySelectedScreen(2, Integer.parseInt(info[1]));
                 break;
             case "Rubric":
-                displaySelectedScreen(12, Integer.parseInt(info[1]));
+
                 break;
         }
 
@@ -170,5 +167,3 @@ public class MainActivity extends AppCompatActivity
 
     //--------------------------------------------------//
 }
-
-//https://github.com/CarlosADLRT/Rubric.git
