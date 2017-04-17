@@ -15,13 +15,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.aforce.proyecto1.models.Activity;
 import com.example.aforce.proyecto1.models.Course;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
-import com.raizlabs.android.dbflow.sql.language.Select;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,7 +39,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        displaySelectedScreen(R.id.nav_courses);
+        displaySelectedScreen(R.id.nav_courses, 0);
     }
 
     @Override
@@ -86,9 +82,9 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    private void displaySelectedScreen(int id){
+    private void displaySelectedScreen(int viewId, int itemId){
         Fragment fragment = null;
-        switch (id){
+        switch (viewId){
             case R.id.nav_courses:
                 fragment = new CoursesView();
                 break;
@@ -100,11 +96,12 @@ public class MainActivity extends AppCompatActivity
                 break;
             case 2: //VER CURSO
                 fragment = new ShowCourseView();
+                //buscar como pasar el itemId al fragment
                 break;
             case 3:
                 break;
             case 11:
-                Toast.makeText(getApplicationContext(), "Hola", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
                 break;
         }
 
@@ -124,21 +121,34 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        displaySelectedScreen(id);
+        displaySelectedScreen(id, 0);
 
         return true;
+    }
+
+    public void displayItemFromList(View view) {
+        String info[] = ((String) view.getTag()).split("-");
+
+        switch (info[0]){
+            case "Course":
+                displaySelectedScreen(2, Integer.parseInt(info[1]));
+                break;
+            case "Rubric":
+
+                break;
+        }
+
     }
 
     //---------------------Display things---------------//
 
     public void onClickCreateCourseView(View view) {
-        displaySelectedScreen(1);
+        displaySelectedScreen(1, 0);
     }
 
     public void onClickCreateRubricView(View view) {
-        displaySelectedScreen(11);
+        displaySelectedScreen(11, 0);
     }
-
     //--------------------------------------------------//
 
     //---------------------Create things----------------//
@@ -147,8 +157,9 @@ public class MainActivity extends AppCompatActivity
         EditText et = (EditText) findViewById(R.id.etCourseName);
         Course c = new Course(et.getText().toString());
         c.save();
-        displaySelectedScreen(R.id.nav_courses);
+        displaySelectedScreen(R.id.nav_courses, 0);
     }
+
 
     //--------------------------------------------------//
 }
