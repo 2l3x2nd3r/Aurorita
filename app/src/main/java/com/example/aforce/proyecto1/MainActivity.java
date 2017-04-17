@@ -41,16 +41,6 @@ public class MainActivity extends AppCompatActivity
 
         FlowManager.init(new FlowConfig.Builder(this).openDatabasesOnInit(true).build());
 
-        Activity a = new Activity("hola", 1,  1);
-        a.save();
-
-        List<Activity> list = new Select().from(Activity.class).queryList();
-
-        for (int i = 0; i < list.size(); i++){
-            Activity item = list.get(i);
-            Toast.makeText(this, item.toString(), Toast.LENGTH_SHORT).show();
-        }
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         displaySelectedScreen(R.id.nav_courses);
@@ -111,7 +101,10 @@ public class MainActivity extends AppCompatActivity
             case 2: //VER CURSO
                 fragment = new ShowCourseView();
                 break;
+            case 3:
+                break;
             case 11:
+                Toast.makeText(getApplicationContext(), "Hola", Toast.LENGTH_SHORT).show();
                 break;
         }
 
@@ -136,12 +129,26 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void onClickCreateCourse(View view) {
-        EditText et = (EditText) findViewById(R.id.etCourseName);
-        Course c = new Course(et.getText().toString());
+    //---------------------Display things---------------//
+
+    public void onClickCreateCourseView(View view) {
+        displaySelectedScreen(1);
     }
 
     public void onClickCreateRubricView(View view) {
-        Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+        displaySelectedScreen(11);
     }
+
+    //--------------------------------------------------//
+
+    //---------------------Create things----------------//
+
+    public void onClickCreateCourse(View view) {
+        EditText et = (EditText) findViewById(R.id.etCourseName);
+        Course c = new Course(et.getText().toString());
+        c.save();
+        displaySelectedScreen(R.id.nav_courses);
+    }
+
+    //--------------------------------------------------//
 }

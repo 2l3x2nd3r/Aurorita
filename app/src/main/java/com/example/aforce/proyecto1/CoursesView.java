@@ -37,11 +37,16 @@ public class CoursesView extends Fragment {
 
         ArrayList<BaseModel> records = new ArrayList<BaseModel>();
 
-        List<Course> list = new Select().from(Course.class).queryList();
+        List<Course> courselist = new Select().from(Course.class).queryList();
 
-        for (int i = 0; i < list.size(); i++){
-            records.add(list.get(i));
+        for (int i = 0; i < courselist.size(); i++){
+            records.add(courselist.get(i));
+
         }
+
+        if(records.isEmpty())
+            cv.setVisibility(View.VISIBLE);
+
 
         adapter = new ListAdapter(getContext(), records);
         lv.setDivider(null);
