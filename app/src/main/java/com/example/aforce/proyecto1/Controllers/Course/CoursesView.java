@@ -1,4 +1,4 @@
-package com.example.aforce.proyecto1;
+package com.example.aforce.proyecto1.Controllers.Course;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.aforce.proyecto1.models.Rubric;
+import com.example.aforce.proyecto1.ListAdapter;
+import com.example.aforce.proyecto1.R;
+import com.example.aforce.proyecto1.models.Course;
 import com.raizlabs.android.dbflow.sql.language.Select;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
@@ -17,10 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by AForce on 24/03/2017.
+ * Created by AForce on 25/03/2017.
  */
 
-public class RubricsView extends Fragment {
+public class CoursesView extends Fragment {
 
     CardView cv;
     ListView lv;
@@ -30,22 +32,24 @@ public class RubricsView extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getActivity().setTitle("Rubricas");
+        getActivity().setTitle("Cursos");
 
         cv = (CardView) view.findViewById(R.id.cvNoContent);
-        lv = (ListView) view.findViewById(R.id.lvRubrics);
+        lv = (ListView) view.findViewById(R.id.lvCourses);
 
         ArrayList<BaseModel> records = new ArrayList<BaseModel>();
 
-        List<Rubric> list = new Select().from(Rubric.class).queryList();
+        List<Course> courselist = new Select().from(Course.class).queryList();
 
-        for (int i = 0; i < list.size(); i++){
-            records.add(list.get(i));
+        for (int i = 0; i < courselist.size(); i++){
+            records.add(courselist.get(i));
+
         }
 
-        if(records.isEmpty()){
+        if(records.isEmpty())
             cv.setVisibility(View.VISIBLE);
-        }
+
+
         adapter = new ListAdapter(getContext(), records);
         lv.setDivider(null);
         lv.setAdapter(adapter);
@@ -54,7 +58,6 @@ public class RubricsView extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.rubrics_view, container, false);
+        return inflater.inflate(R.layout.courses_view, container, false);
     }
-
 }

@@ -1,4 +1,4 @@
-package com.example.aforce.proyecto1;
+package com.example.aforce.proyecto1.Controllers.Course;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

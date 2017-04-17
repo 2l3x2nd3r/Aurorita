@@ -15,6 +15,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.aforce.proyecto1.Controllers.Course.CoursesView;
+import com.example.aforce.proyecto1.Controllers.Course.CreateCourseView;
+import com.example.aforce.proyecto1.Controllers.Course.ShowCourseView;
+import com.example.aforce.proyecto1.Controllers.Rubric.RubricsView;
 import com.example.aforce.proyecto1.models.Course;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
