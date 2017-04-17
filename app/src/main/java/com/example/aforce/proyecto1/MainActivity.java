@@ -2,9 +2,9 @@ package com.example.aforce.proyecto1;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,7 +16,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.aforce.proyecto1.models.Activity;
 import com.example.aforce.proyecto1.models.Course;
+import com.raizlabs.android.dbflow.config.FlowConfig;
+import com.raizlabs.android.dbflow.config.FlowManager;
+import com.raizlabs.android.dbflow.sql.language.Select;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -36,7 +42,19 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        FlowManager.init(new FlowConfig.Builder(this).openDatabasesOnInit(true).build());
+
         fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        Activity a = new Activity("hola", 1,  1);
+        a.save();
+
+        List<Activity> list = new Select().from(Activity.class).queryList();
+
+        for (int i = 0; i < list.size(); i++){
+            Activity item = list.get(i);
+            Toast.makeText(this, item.toString(), Toast.LENGTH_SHORT).show();
+        }
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);

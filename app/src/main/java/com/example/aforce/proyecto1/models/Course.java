@@ -1,25 +1,36 @@
 package com.example.aforce.proyecto1.models;
 
+import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
 /**
  * Created by AForce on 24/03/2017.
  */
 
-public class Course {
+@Table(database = MyDatabase.class)
+public class Course extends BaseModel {
 
-    String Name;
+    @PrimaryKey (autoincrement = true)
+    long id;
+
+    @Column
+    public String name;
 
     public Course() {
     }
 
     public Course(String name) {
-        Name = name;
+        this.name = name;
     }
 
-    public String getName() {
-        return Name;
+    public long getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        Name = name;
+    public void setId(long id) {
+        this.id = id;
     }
+
 }

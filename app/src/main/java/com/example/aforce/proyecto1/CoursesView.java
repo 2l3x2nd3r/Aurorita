@@ -9,6 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.aforce.proyecto1.models.Course;
+import com.raizlabs.android.dbflow.sql.language.Select;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by AForce on 25/03/2017.
  */
@@ -28,15 +35,17 @@ public class CoursesView extends Fragment {
         cv = (CardView) view.findViewById(R.id.cvNoContent);
         lv = (ListView) view.findViewById(R.id.lvCourses);
 
-        /*SugarRecord records[] = new SugarRecord[1];
-        for (int i = 0; i < 1; i++) {
-            records[i] = new Course("Hola");
+        ArrayList<BaseModel> records = new ArrayList<BaseModel>();
+
+        List<Course> list = new Select().from(Course.class).queryList();
+
+        for (int i = 0; i < list.size(); i++){
+            records.add(list.get(i));
         }
 
-
-        adapter = new ListAdapter(getContext(), courses);
+        adapter = new ListAdapter(getContext(), records);
         lv.setDivider(null);
-        lv.setAdapter(adapter);*/
+        lv.setAdapter(adapter);
     }
 
     @Nullable

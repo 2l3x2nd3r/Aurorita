@@ -8,6 +8,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.aforce.proyecto1.models.Course;
+import com.example.aforce.proyecto1.models.Rubric;
+import com.raizlabs.android.dbflow.structure.BaseModel;
+
+import java.util.ArrayList;
+
 /**
  * Created by AForce on 26/03/2017.
  */
@@ -15,25 +21,25 @@ import android.widget.TextView;
 public class ListAdapter extends BaseAdapter{
 
     private Context context;
-    String data[];
+    ArrayList<BaseModel> data;
 
-    public ListAdapter(Context context, String[] data) {
+    public ListAdapter(Context context, ArrayList<BaseModel> data) {
         this.context = context;
         this.data = data;
     }
 
-    public void setData(String[] data) {
+    public void setData(ArrayList<BaseModel> data) {
         this.data = data;
     }
 
     @Override
     public int getCount() {
-        return data.length;
+        return data.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return data[position];
+        return data.get(position);
     }
 
     @Override
@@ -50,8 +56,8 @@ public class ListAdapter extends BaseAdapter{
 
         TextView tvRow = (TextView) view.findViewById(R.id.tvRow);
         CardView cardRow = (CardView) view.findViewById(R.id.cardRow);
-        /*
-        SugarRecord sr = (SugarRecord) getItem(position);
+
+        BaseModel sr = (BaseModel) getItem(position);
         switch (sr.getClass().getSimpleName()){
             case "Rubric":
                 Rubric Robj = (Rubric) sr;
@@ -60,10 +66,10 @@ public class ListAdapter extends BaseAdapter{
                 break;
             case "Course":
                 Course Cobj = (Course) sr;
-                tvRow.setText(""+Cobj.getName());
+                tvRow.setText(""+Cobj.name);
                 cardRow.setTag("Course-" + Cobj.getId());
                 break;
-        }*/
+        }
 
         return view;
     }
