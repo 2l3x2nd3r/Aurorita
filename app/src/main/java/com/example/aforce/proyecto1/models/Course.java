@@ -13,7 +13,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 public class Course extends BaseModel {
 
     @PrimaryKey (autoincrement = true)
-    long id;
+    int id;
 
     @Column
     public String name;
@@ -25,12 +25,8 @@ public class Course extends BaseModel {
         this.name = name;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
 }

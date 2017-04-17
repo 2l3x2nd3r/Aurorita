@@ -12,10 +12,16 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 @Table(database = MyDatabase.class)
 public class Rubric extends BaseModel{
     @PrimaryKey
-    long id;
+    int id;
 
     @Column
     public String name;
+
+    @Column
+    public int categoryNumber;
+
+    @Column
+    public int levelNumber;
 
     public Rubric() {
     }
@@ -24,7 +30,7 @@ public class Rubric extends BaseModel{
         this.name = name;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 }

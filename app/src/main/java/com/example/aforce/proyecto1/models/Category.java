@@ -1,9 +1,14 @@
 package com.example.aforce.proyecto1.models;
 
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.OneToMany;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
+
+import java.lang.reflect.Field;
+import java.util.List;
 
 /**
  * Created by AForce on 24/03/2017.
@@ -13,7 +18,7 @@ import com.raizlabs.android.dbflow.structure.BaseModel;
 public class Category extends BaseModel{
 
     @PrimaryKey(autoincrement = true)
-    long id;
+    int id;
 
     @Column
     public String name;
@@ -21,12 +26,25 @@ public class Category extends BaseModel{
     @Column
     public int rubric_id;
 
+    List<Element> elements;
+
     public Category() {
     }
 
     public Category(String name, int rubric_id) {
-
         this.name = name;
         this.rubric_id = rubric_id;
     }
+
+    @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "elements")
+    public List<Element> dbFlowOneTwoManyUtilMethod() {
+        if (elements == null || elements.isEmpty()) {
+            elements = SQLite.select()
+                    .from(Element.class)
+                    .where(Element_Table.category_id.eq(id))
+                    .queryList();
+        }
+        return elements;
+    }
+
 }
