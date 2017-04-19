@@ -7,7 +7,6 @@ import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -26,14 +25,22 @@ public class Category extends BaseModel{
     @Column
     public int rubric_id;
 
+    @Column
+    public int elementNumber;
+
+    @Column
+    public int percent;
+
     List<Element> elements;
 
     public Category() {
     }
 
-    public Category(String name, int rubric_id) {
+    public Category(String name, int rubric_id, int elementNumber, int percent) {
         this.name = name;
         this.rubric_id = rubric_id;
+        this.elementNumber = elementNumber;
+        this.percent = percent;
     }
 
     @OneToMany(methods = {OneToMany.Method.ALL}, variableName = "elements")

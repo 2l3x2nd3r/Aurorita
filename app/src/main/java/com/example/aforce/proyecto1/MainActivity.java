@@ -9,22 +9,34 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.aforce.proyecto1.Controllers.Course.CoursesView;
 import com.example.aforce.proyecto1.Controllers.Course.CreateCourseView;
 import com.example.aforce.proyecto1.Controllers.Course.StudentsActivitiesContainer;
+import com.example.aforce.proyecto1.Controllers.Rubric.CreateRubricView;
 import com.example.aforce.proyecto1.Controllers.Rubric.RubricsView;
+import com.example.aforce.proyecto1.models.Category;
 import com.example.aforce.proyecto1.models.Course;
+import com.example.aforce.proyecto1.models.Rubric;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
+    private long mBackPressed;
+    MenuItem backMenu;
+    boolean canCreateRubric = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +64,23 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            int count = getFragmentManager().getBackStackEntryCount();
-
-            if (count == 0) {
-                super.onBackPressed();
-                //additional code
-            } else {
-                getFragmentManager().popBackStack();
+            if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis())
+            {
+                finish();
+                return;
             }
+            else { Toast.makeText(getBaseContext(), "Unde de nuevo para salir", Toast.LENGTH_SHORT).show(); }
+
+            mBackPressed = System.currentTimeMillis();
         }
 
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        backMenu = menu.findItem(R.id.action_settings);
+        backMenu.setVisible(false);
+        return true;
     }
 
     @Override
@@ -80,14 +99,33 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            int count = getFragmentManager().getBackStackEntryCount();
+            String tag = fragment.getTag();
+            System.out.println(tag);
+            if (count == 0) {
+                if(tag == "Back") {
+                    super.onBackPressed();
+                    backMenu.setVisible(false);
+                }
+                //additional code
+            } else {
+                getFragmentManager().popBackStack();
+            }
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    Fragment fragment;
+    boolean sw = false;
     private void displaySelectedScreen(int viewId, int itemId){
-        Fragment fragment = null;
+        fragment = null;
+        String tag = "noBack";
+
+        if(sw)
+            backMenu.setVisible(false);
+
+        sw = true;
         switch (viewId){
             case R.id.nav_courses:
                 fragment = new CoursesView();
@@ -97,6 +135,8 @@ public class MainActivity extends AppCompatActivity
                 break;
             case 1: //CREAR CURSO
                 fragment = new CreateCourseView();
+                tag = "Back";
+                backMenu.setVisible(true);
                 break;
             case 2: //VER CURSO
                 fragment = new StudentsActivitiesContainer();
@@ -105,13 +145,15 @@ public class MainActivity extends AppCompatActivity
             case 3:
                 break;
             case 11:
-                Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+                fragment = new CreateRubricView();
+                tag = "Back";
+                backMenu.setVisible(true);
                 break;
         }
 
         if(fragment != null){
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_main, fragment).addToBackStack("tag");
+            ft.replace(R.id.content_main, fragment, tag).addToBackStack("tag");
             ft.commit();
         }
 
@@ -173,5 +215,55 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public void onClickCreateRubric(View view) {
+        if(canCreateRubric) {
+            String nam = ((EditText) findViewById(R.id.crvEt1)).getText().toString();
+            int cats = Integer.parseInt(((EditText) findViewById(R.id.crvEt2)).getText().toString());
+            int lvls = Integer.parseInt(((EditText) findViewById(R.id.crvEt3)).getText().toString());
+
+            Rubric r = new Rubric(nam, cats, lvls);
+            r.save();
+            for (int i = 0; i < lls.size(); i++) {
+                String name = ((EditText) lls.get(i).findViewById(R.id.catrowet1)).getText().toString();
+                int percent = Integer.parseInt(((EditText) lls.get(i).findViewById(R.id.catrowet2)).getText().toString());
+                int elements = Integer.parseInt(((EditText) lls.get(i).findViewById(R.id.catrowet3)).getText().toString());
+
+                Category cat = new Category(name, r.getId(), percent, elements);
+                cat.save();
+            }
+            displaySelectedScreen(R.id.nav_rubrics, 0);
+            Toast.makeText(this, "Rubrica creada con exito", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Debes agregar almenos una categoria", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void addCategoryRow(View view){
+        ((CreateRubricView) fragment).removeLayoutItems();
+        EditText categoryNumber = (EditText) findViewById(R.id.crvEt2);
+        String num = categoryNumber.getText().toString();
+        int quantity;
+        if(num.equals("")){
+            quantity=0;
+        }else{
+            canCreateRubric = true;
+            quantity=Integer.parseInt(num);
+        }
+        for(int i = 0; i < quantity; i++) {
+            addCategory(i + 1);
+        }
+    }
+
     //--------------------------------------------------//
+    ArrayList<LinearLayout> lls = new ArrayList<LinearLayout>();
+    private void addCategory(int i) {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        LinearLayout ll = (LinearLayout) inflater.inflate(R.layout.category_row, null);
+        lls.add(ll);
+        EditText catrowet1 = (EditText) ll.findViewById(R.id.catrowet1);
+        catrowet1.setText("Categoria " + (i));
+        //EditText catrowet2 = (EditText) ll.findViewById(R.id.catrowet2);
+        //EditText catrowet3 = (EditText) ll.findViewById(R.id.catrowet3);
+        ((CreateRubricView) fragment).addLayout(ll);
+    }
 }
