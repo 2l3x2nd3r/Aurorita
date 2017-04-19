@@ -38,6 +38,7 @@ public class StudentsActivitiesContainer extends Fragment {
 
         final ViewPager viewPager = (ViewPager) inflatedView.findViewById(R.id.pager);
         final PageAdapter adapter = new PageAdapter(getFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
