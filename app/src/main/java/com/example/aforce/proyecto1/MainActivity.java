@@ -133,6 +133,7 @@ public class MainActivity extends AppCompatActivity
     public void displayItemFromList(View view) {
         String info[] = ((String) view.getTag()).split("-");
 
+
         switch (info[0]){
             case "Course":
                 displaySelectedScreen(2, Integer.parseInt(info[1]));
@@ -153,6 +154,10 @@ public class MainActivity extends AppCompatActivity
     public void onClickCreateRubricView(View view) {
         displaySelectedScreen(11, 0);
     }
+
+    public void onClickCreateStudentView(View view) {
+        displaySelectedScreen(3, 0);
+    }
     //--------------------------------------------------//
 
     //---------------------Create things----------------//
@@ -164,6 +169,9 @@ public class MainActivity extends AppCompatActivity
         displaySelectedScreen(R.id.nav_courses, 0);
     }
 
+    public void onClickCreateStudent(View view) {
+
+    }
 
     //--------------------------------------------------//
 }
