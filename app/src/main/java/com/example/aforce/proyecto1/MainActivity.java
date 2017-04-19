@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -99,8 +100,10 @@ public class MainActivity extends AppCompatActivity
                 fragment = new CreateCourseView();
                 break;
             case 2: //VER CURSO
+                Bundle bundle = new Bundle();
+                bundle.putInt("itemId", itemId);
                 fragment = new StudentsActivitiesContainer();
-                //buscar como pasar el itemId al fragment
+                fragment.setArguments(bundle);
                 break;
             case 3:
                 break;
@@ -132,8 +135,6 @@ public class MainActivity extends AppCompatActivity
 
     public void displayItemFromList(View view) {
         String info[] = ((String) view.getTag()).split("-");
-
-
         switch (info[0]){
             case "Course":
                 displaySelectedScreen(2, Integer.parseInt(info[1]));

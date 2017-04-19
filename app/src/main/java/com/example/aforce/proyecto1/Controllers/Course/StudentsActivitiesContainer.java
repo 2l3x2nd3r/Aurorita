@@ -31,13 +31,15 @@ public class StudentsActivitiesContainer extends Fragment {
 
         View inflatedView = inflater.inflate(R.layout.students_activities_container_view, container, false);
 
+        int itemId = getArguments().getInt("itemId");
+
         TabLayout tabLayout = (TabLayout) inflatedView.findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Estudiantes"));
         tabLayout.addTab(tabLayout.newTab().setText("Actividades"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) inflatedView.findViewById(R.id.pager);
-        final PageAdapter adapter = new PageAdapter(getFragmentManager(), tabLayout.getTabCount());
+        final PageAdapter adapter = new PageAdapter(getFragmentManager(), tabLayout.getTabCount(), itemId);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
