@@ -18,14 +18,18 @@ import android.widget.Toast;
 
 import com.example.aforce.proyecto1.Controllers.Course.CoursesView;
 import com.example.aforce.proyecto1.Controllers.Course.CreateCourseView;
+import com.example.aforce.proyecto1.Controllers.Course.CreateStudentView;
 import com.example.aforce.proyecto1.Controllers.Course.StudentsActivitiesContainer;
 import com.example.aforce.proyecto1.Controllers.Rubric.RubricsView;
 import com.example.aforce.proyecto1.models.Course;
+import com.example.aforce.proyecto1.models.Student;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private int globalId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +93,7 @@ public class MainActivity extends AppCompatActivity
 
     private void displaySelectedScreen(int viewId, int itemId){
         Fragment fragment = null;
+        Bundle bundle = null;
         switch (viewId){
             case R.id.nav_courses:
                 fragment = new CoursesView();
@@ -99,13 +104,15 @@ public class MainActivity extends AppCompatActivity
             case 1: //CREAR CURSO
                 fragment = new CreateCourseView();
                 break;
-            case 2: //VER CURSO
-                Bundle bundle = new Bundle();
+            case 2: //VER CONTENEDOR ESTUDIANTES/ACTIVIDADES
+                globalId = itemId;
+                bundle = new Bundle();
                 bundle.putInt("itemId", itemId);
                 fragment = new StudentsActivitiesContainer();
                 fragment.setArguments(bundle);
                 break;
-            case 3:
+            case 3: //CREAR ESTUDIANTE
+                fragment = new CreateStudentView();
                 break;
             case 11:
                 Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
@@ -171,7 +178,11 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onClickCreateStudent(View view) {
-
+        EditText etStudentName = (EditText) findViewById(R.id.etStudentName);
+        EditText etStudentState = (EditText) findViewById(R.id.etStudentState);
+        Student s = new Student(etStudentName.getText().toString(), globalId, etStudentState.getText().toString());
+        s.save();
+        displaySelectedScreen(2, globalId);
     }
 
     //--------------------------------------------------//

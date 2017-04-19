@@ -2,6 +2,7 @@ package com.example.aforce.proyecto1;
 
 import android.content.Context;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.aforce.proyecto1.models.Course;
 import com.example.aforce.proyecto1.models.Rubric;
+import com.example.aforce.proyecto1.models.Student;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.ArrayList;
@@ -69,6 +71,10 @@ public class ListAdapter extends BaseAdapter{
                 tvRow.setText(""+Cobj.name);
                 cardRow.setTag("Course-" + Cobj.getId());
                 break;
+            case "Student":
+                Student Sobj = (Student) sr;
+                tvRow.setText(""+Sobj.name);
+                cardRow.setTag("Student-" + Sobj.getId());
         }
 
         return view;
