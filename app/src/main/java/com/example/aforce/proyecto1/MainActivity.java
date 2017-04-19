@@ -18,13 +18,17 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.aforce.proyecto1.Controllers.Course.CoursesView;
+import com.example.aforce.proyecto1.Controllers.Course.CreateActivityView;
 import com.example.aforce.proyecto1.Controllers.Course.CreateCourseView;
+import com.example.aforce.proyecto1.Controllers.Course.CreateStudentView;
 import com.example.aforce.proyecto1.Controllers.Course.StudentsActivitiesContainer;
 import com.example.aforce.proyecto1.Controllers.Rubric.CreateRubricView;
 import com.example.aforce.proyecto1.Controllers.Rubric.RubricsView;
 import com.example.aforce.proyecto1.models.Category;
 import com.example.aforce.proyecto1.models.Course;
 import com.example.aforce.proyecto1.models.Rubric;
+import com.example.aforce.proyecto1.models.Activity;
+import com.example.aforce.proyecto1.models.Student;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity
     private long mBackPressed;
     MenuItem backMenu;
     boolean canCreateRubric = false;
+    private int globalId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,13 +124,15 @@ public class MainActivity extends AppCompatActivity
     Fragment fragment;
     boolean sw = false;
     private void displaySelectedScreen(int viewId, int itemId){
+
         fragment = null;
         String tag = "noBack";
 
         if(sw)
             backMenu.setVisible(false);
-
         sw = true;
+        Fragment fragment = null;
+        Bundle bundle = null;
         switch (viewId){
             case R.id.nav_courses:
                 fragment = new CoursesView();
@@ -138,11 +145,18 @@ public class MainActivity extends AppCompatActivity
                 tag = "Back";
                 backMenu.setVisible(true);
                 break;
-            case 2: //VER CURSO
+            case 2: //VER CONTENEDOR ESTUDIANTES/ACTIVIDADES
+                globalId = itemId;
+                bundle = new Bundle();
+                bundle.putInt("itemId", itemId);
                 fragment = new StudentsActivitiesContainer();
-                //buscar como pasar el itemId al fragment
+                fragment.setArguments(bundle);
                 break;
-            case 3:
+            case 3: //CREAR ESTUDIANTE
+                fragment = new CreateStudentView();
+                break;
+            case 4: //CREAR ACTIVIDAD
+                fragment = new CreateActivityView();
                 break;
             case 11:
                 fragment = new CreateRubricView();
@@ -174,8 +188,6 @@ public class MainActivity extends AppCompatActivity
 
     public void displayItemFromList(View view) {
         String info[] = ((String) view.getTag()).split("-");
-
-
         switch (info[0]){
             case "Course":
                 displaySelectedScreen(2, Integer.parseInt(info[1]));
@@ -200,6 +212,10 @@ public class MainActivity extends AppCompatActivity
     public void onClickCreateStudentView(View view) {
         displaySelectedScreen(3, 0);
     }
+
+    public void onClickCreateActividadView(View view) {
+        displaySelectedScreen(4, 0);
+    }
     //--------------------------------------------------//
 
     //---------------------Create things----------------//
@@ -212,7 +228,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void onClickCreateStudent(View view) {
+        EditText etStudentName = (EditText) findViewById(R.id.etStudentName);
+        EditText etStudentState = (EditText) findViewById(R.id.etStudentState);
+        Student s = new Student(etStudentName.getText().toString(), globalId, etStudentState.getText().toString());
+        s.save();
+        displaySelectedScreen(2, globalId);
+    }
 
+    public void onClickCreateActividad(View view) {
+        EditText etActivityName = (EditText) findViewById(R.id.etActivityName);
+        Activity a = new Activity(etActivityName.getText().toString(), 1, globalId);
+        a.save();
+        displaySelectedScreen(2, globalId);
     }
 
     public void onClickCreateRubric(View view) {

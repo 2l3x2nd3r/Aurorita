@@ -1,5 +1,6 @@
 package com.example.aforce.proyecto1.Controllers.Course;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -10,21 +11,29 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class PageAdapter extends FragmentStatePagerAdapter {
     private int ntabs;
+    private int itemId;
 
-    public PageAdapter (FragmentManager fm, int ntabs){
+    public PageAdapter (FragmentManager fm, int ntabs, int itemId){
         super(fm);
         this.ntabs = ntabs;
+        this.itemId = itemId;
     }
 
     @Override
     public Fragment getItem(int position) {
+        //Recibir el itemId de afuera
+        Bundle bundle = new Bundle();
+        bundle.putInt("itemId", itemId);
+
         switch (position){
             case 0:
                 StudentsView sv = new StudentsView();
+                sv.setArguments(bundle);
                 return sv;
 
             case 1:
                 ActivitiesView av = new ActivitiesView();
+                av.setArguments(bundle);
                 return av;
 
             default:

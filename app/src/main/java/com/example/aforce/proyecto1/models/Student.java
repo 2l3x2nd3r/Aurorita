@@ -33,5 +33,8 @@ public class Student extends BaseModel{
         this.state = state;
     }
 
+    public int getId() {
+        return id;
+    }
 
 }
