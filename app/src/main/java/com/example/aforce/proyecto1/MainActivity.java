@@ -17,10 +17,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.aforce.proyecto1.Controllers.Course.CoursesView;
+import com.example.aforce.proyecto1.Controllers.Course.CreateActivityView;
 import com.example.aforce.proyecto1.Controllers.Course.CreateCourseView;
 import com.example.aforce.proyecto1.Controllers.Course.CreateStudentView;
 import com.example.aforce.proyecto1.Controllers.Course.StudentsActivitiesContainer;
 import com.example.aforce.proyecto1.Controllers.Rubric.RubricsView;
+import com.example.aforce.proyecto1.models.Activity;
 import com.example.aforce.proyecto1.models.Course;
 import com.example.aforce.proyecto1.models.Student;
 import com.raizlabs.android.dbflow.config.FlowConfig;
@@ -114,6 +116,9 @@ public class MainActivity extends AppCompatActivity
             case 3: //CREAR ESTUDIANTE
                 fragment = new CreateStudentView();
                 break;
+            case 4: //CREAR ACTIVIDAD
+                fragment = new CreateActivityView();
+                break;
             case 11:
                 Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
                 break;
@@ -166,6 +171,10 @@ public class MainActivity extends AppCompatActivity
     public void onClickCreateStudentView(View view) {
         displaySelectedScreen(3, 0);
     }
+
+    public void onClickCreateActividadView(View view) {
+        displaySelectedScreen(4, 0);
+    }
     //--------------------------------------------------//
 
     //---------------------Create things----------------//
@@ -182,6 +191,13 @@ public class MainActivity extends AppCompatActivity
         EditText etStudentState = (EditText) findViewById(R.id.etStudentState);
         Student s = new Student(etStudentName.getText().toString(), globalId, etStudentState.getText().toString());
         s.save();
+        displaySelectedScreen(2, globalId);
+    }
+
+    public void onClickCreateActividad(View view) {
+        EditText etActivityName = (EditText) findViewById(R.id.etActivityName);
+        Activity a = new Activity(etActivityName.getText().toString(), 1, globalId);
+        a.save();
         displaySelectedScreen(2, globalId);
     }
 

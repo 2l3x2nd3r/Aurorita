@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.aforce.proyecto1.models.Activity;
 import com.example.aforce.proyecto1.models.Course;
 import com.example.aforce.proyecto1.models.Rubric;
 import com.example.aforce.proyecto1.models.Student;
@@ -75,6 +76,11 @@ public class ListAdapter extends BaseAdapter{
                 Student Sobj = (Student) sr;
                 tvRow.setText(""+Sobj.name);
                 cardRow.setTag("Student-" + Sobj.getId());
+                break;
+            case "Activity":
+                Activity Aobj = (Activity) sr;
+                tvRow.setText(""+Aobj.name);
+                cardRow.setTag("Activity-" +Aobj.getId());
         }
 
         return view;
