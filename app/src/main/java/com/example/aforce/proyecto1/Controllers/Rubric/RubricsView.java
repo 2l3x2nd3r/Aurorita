@@ -12,8 +12,6 @@ import android.widget.ListView;
 import com.example.aforce.proyecto1.ListAdapter;
 import com.example.aforce.proyecto1.R;
 import com.example.aforce.proyecto1.models.Rubric;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,13 +35,7 @@ public class RubricsView extends Fragment {
         cv = (CardView) view.findViewById(R.id.cvNoContent);
         lv = (ListView) view.findViewById(R.id.lvRubrics);
 
-        ArrayList<BaseModel> records = new ArrayList<BaseModel>();
-
-        List<Rubric> list = new Select().from(Rubric.class).queryList();
-
-        for (int i = 0; i < list.size(); i++){
-            records.add(list.get(i));
-        }
+        ArrayList<Object> records = new ArrayList<>();
 
         if(records.isEmpty()){
             cv.setVisibility(View.VISIBLE);

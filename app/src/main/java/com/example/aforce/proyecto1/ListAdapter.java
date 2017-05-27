@@ -13,7 +13,6 @@ import com.example.aforce.proyecto1.models.Activity;
 import com.example.aforce.proyecto1.models.Course;
 import com.example.aforce.proyecto1.models.Rubric;
 import com.example.aforce.proyecto1.models.Student;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.ArrayList;
 
@@ -24,14 +23,14 @@ import java.util.ArrayList;
 public class ListAdapter extends BaseAdapter{
 
     private Context context;
-    ArrayList<BaseModel> data;
+    ArrayList<Object> data;
 
-    public ListAdapter(Context context, ArrayList<BaseModel> data) {
+    public ListAdapter(Context context, ArrayList<Object> data) {
         this.context = context;
         this.data = data;
     }
 
-    public void setData(ArrayList<BaseModel> data) {
+    public void setData(ArrayList<Object> data) {
         this.data = data;
     }
 
@@ -60,7 +59,7 @@ public class ListAdapter extends BaseAdapter{
         TextView tvRow = (TextView) view.findViewById(R.id.tvRow);
         CardView cardRow = (CardView) view.findViewById(R.id.cardRow);
 
-        BaseModel sr = (BaseModel) getItem(position);
+        Object sr = (Object) getItem(position);
         switch (sr.getClass().getSimpleName()){
             case "Rubric":
                 Rubric Robj = (Rubric) sr;

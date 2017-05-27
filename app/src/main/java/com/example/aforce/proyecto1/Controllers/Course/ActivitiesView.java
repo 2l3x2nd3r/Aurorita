@@ -11,10 +11,6 @@ import android.widget.ListView;
 
 import com.example.aforce.proyecto1.ListAdapter;
 import com.example.aforce.proyecto1.R;
-import com.example.aforce.proyecto1.models.Activity;
-import com.example.aforce.proyecto1.models.Student;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,14 +36,8 @@ public class ActivitiesView extends Fragment {
         cv = (CardView) view.findViewById(R.id.cvNoContent);
         lv = (ListView) view.findViewById(R.id.lvActivities);
 
-        ArrayList<BaseModel> records = new ArrayList<BaseModel>();
+        ArrayList<Object> records = new ArrayList<>();
 
-        List<Activity> activityList = new Select().from(Activity.class).queryList();
-
-        for (int i = 0; i < activityList.size(); i++){
-            if(activityList.get(i).course_id == itemId)
-                records.add(activityList.get(i));
-        }
 
         if(records.isEmpty())
             cv.setVisibility(View.VISIBLE);

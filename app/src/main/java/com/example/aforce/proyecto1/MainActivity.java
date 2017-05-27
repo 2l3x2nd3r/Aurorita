@@ -29,8 +29,6 @@ import com.example.aforce.proyecto1.models.Course;
 import com.example.aforce.proyecto1.models.Rubric;
 import com.example.aforce.proyecto1.models.Activity;
 import com.example.aforce.proyecto1.models.Student;
-import com.raizlabs.android.dbflow.config.FlowConfig;
-import com.raizlabs.android.dbflow.config.FlowManager;
 
 import java.util.ArrayList;
 
@@ -55,8 +53,6 @@ public class MainActivity extends AppCompatActivity
             this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
-        FlowManager.init(new FlowConfig.Builder(this).openDatabasesOnInit(true).build());
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -223,22 +219,21 @@ public class MainActivity extends AppCompatActivity
     public void onClickCreateCourse(View view) {
         EditText et = (EditText) findViewById(R.id.etCourseName);
         Course c = new Course(et.getText().toString());
-        c.save();
+
         displaySelectedScreen(R.id.nav_courses, 0);
     }
 
     public void onClickCreateStudent(View view) {
         EditText etStudentName = (EditText) findViewById(R.id.etStudentName);
         EditText etStudentState = (EditText) findViewById(R.id.etStudentState);
-        Student s = new Student(etStudentName.getText().toString(), globalId, etStudentState.getText().toString());
-        s.save();
+
         displaySelectedScreen(2, globalId);
     }
 
     public void onClickCreateActividad(View view) {
         EditText etActivityName = (EditText) findViewById(R.id.etActivityName);
         Activity a = new Activity(etActivityName.getText().toString(), 1, globalId);
-        a.save();
+
         displaySelectedScreen(2, globalId);
     }
 
@@ -249,14 +244,14 @@ public class MainActivity extends AppCompatActivity
             int lvls = Integer.parseInt(((EditText) findViewById(R.id.crvEt3)).getText().toString());
 
             Rubric r = new Rubric(nam, cats, lvls);
-            r.save();
+
             for (int i = 0; i < lls.size(); i++) {
                 String name = ((EditText) lls.get(i).findViewById(R.id.catrowet1)).getText().toString();
                 int percent = Integer.parseInt(((EditText) lls.get(i).findViewById(R.id.catrowet2)).getText().toString());
                 int elements = Integer.parseInt(((EditText) lls.get(i).findViewById(R.id.catrowet3)).getText().toString());
 
                 Category cat = new Category(name, r.getId(), percent, elements);
-                cat.save();
+
             }
             displaySelectedScreen(R.id.nav_rubrics, 0);
             Toast.makeText(this, "Rubrica creada con exito", Toast.LENGTH_SHORT).show();

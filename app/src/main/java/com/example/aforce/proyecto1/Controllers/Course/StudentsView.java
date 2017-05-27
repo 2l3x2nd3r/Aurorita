@@ -15,9 +15,6 @@ import com.example.aforce.proyecto1.ListAdapter;
 import com.example.aforce.proyecto1.R;
 import com.example.aforce.proyecto1.models.Course;
 import com.example.aforce.proyecto1.models.Student;
-import com.example.aforce.proyecto1.models.Student_Table;
-import com.raizlabs.android.dbflow.sql.language.Select;
-import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,15 +40,7 @@ public class StudentsView extends Fragment{
         cv = (CardView) view.findViewById(R.id.cvNoContent);
         lv = (ListView) view.findViewById(R.id.lvStudents);
 
-        ArrayList<BaseModel> records = new ArrayList<BaseModel>();
-
-        List<Student> studentlist = new Select().from(Student.class).queryList();
-
-        for (int i = 0; i < studentlist.size(); i++){
-            if(studentlist.get(i).course_id == itemId)
-                records.add(studentlist.get(i));
-
-        }
+        ArrayList<Object> records = new ArrayList<>();
 
         if(records.isEmpty())
             cv.setVisibility(View.VISIBLE);
