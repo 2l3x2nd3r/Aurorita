@@ -1,27 +1,79 @@
 {
   "project_info": {
-    "project_number": "923244088238",
-    "firebase_url": "https://aurorita-45459.firebaseio.com",
-    "project_id": "aurorita-45459",
-    "storage_bucket": "aurorita-45459.appspot.com"
+    "project_number": "62316350517",
+    "firebase_url": "https://tratrakitralacamatrakeabatraki.firebaseio.com",
+    "project_id": "tratrakitralacamatrakeabatraki",
+    "storage_bucket": "tratrakitralacamatrakeabatraki.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:923244088238:android:39ccdb427544953f",
+        "mobilesdk_app_id": "1:62316350517:android:f33da0f71ce6f0c4",
+        "android_client_info": {
+          "package_name": "com.movil.mauricio_taborda.vendedor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "62316350517-5a9shn24lc6cgcm00t3i9ttapmet7a8h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.movil.mauricio_taborda.vendedor",
+            "certificate_hash": "2be0b1d0ff7dbeb32782cbebf09f0b0f1a253f84"
+          }
+        },
+        {
+          "client_id": "62316350517-7rn6qfoosns81vmp6jtd1b4pd7pmrsl0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.movil.mauricio_taborda.vendedor",
+            "certificate_hash": "8a23571503219fd3771ed202a2a97cf25798996e"
+          }
+        },
+        {
+          "client_id": "62316350517-gkt4hcfoo3cu26rb8cd03qmtcvha116s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2Nb_pt9Y9L9DGY6jHmfcNderYyUDlgyk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "62316350517-gkt4hcfoo3cu26rb8cd03qmtcvha116s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62316350517:android:39ccdb427544953f",
         "android_client_info": {
           "package_name": "com.example.aforce.proyecto1"
         }
       },
       "oauth_client": [
         {
-          "client_id": "923244088238-tmna6re1f9ove22bmfla8jbjjslonnc8.apps.googleusercontent.com",
+          "client_id": "62316350517-gkt4hcfoo3cu26rb8cd03qmtcvha116s.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBkbL-mufnrsAVL0afRVHD5eJWF7_PJeK4"
+          "current_key": "AIzaSyC2Nb_pt9Y9L9DGY6jHmfcNderYyUDlgyk"
         }
       ],
       "services": {
