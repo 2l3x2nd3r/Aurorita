@@ -1,5 +1,6 @@
 package com.example.aforce.proyecto1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -129,6 +130,9 @@ public class MainActivity extends AppCompatActivity
                 Log.d("AUTH", "LOGOUT");
             }
         });
+        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 
     Fragment fragment;

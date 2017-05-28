@@ -39,15 +39,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-        Log.d("llego", "llego1");
         db = FirebaseDatabase.getInstance();
-        Log.d("llego", "llego2");
         btn = (Button) findViewById(R.id.btnLogin);
         linearLoading = (LinearLayout) findViewById(R.id.linearLoadind);
         providers = new ArrayList<>();
         if(mAuth.getCurrentUser() != null){
             afterLogin();
-            Log.d("llego", "llego3");
         }
     }
 
@@ -105,13 +102,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {}
         });
-        linearLoading.setVisibility(View.INVISIBLE);
     }
 
     public void login(View view) {
         providers.add(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build());
         providers.add(new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build());
-        Log.d("llego", "llego4");
         startActivityForResult(AuthUI.getInstance()
                 .createSignInIntentBuilder()
                 .setTheme(R.style.FirebaseLoginTheme)
@@ -119,6 +114,5 @@ public class LoginActivity extends AppCompatActivity {
                 .setIsSmartLockEnabled(false)
                 .setProviders(providers)
                 .build(), RC_SIGN_IN);
-        Log.d("llego", "llego5");
     }
 }

@@ -1,9 +1,5 @@
 <resources>
-<<<<<<< HEAD
     <string name="app_name">Aurorita</string>
-=======
-    <string name="app_name">Rubrics</string>
->>>>>>> 72e5a34ac8ede591321e3418a2b915ed49ecd1f1
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -58,8 +54,7 @@
     <!-- Password recovery -->
     <string name="title_recover_password_activity">Recover password</string>
     <string name="title_confirm_recover_password">Check your email</string>
-    <string name="password_recovery_body">Get instructions sent to this email that explain how to
-        reset your password.</string>
+    <string name="password_recovery_body">Get instructions sent to this email that explain how to reset your password.</string>
     <string name="button_text_send">Send</string>
     <string name="confirm_recovery_body">Follow the instructions sent to %1$s to recover your password.</string>
     <string name="progress_dialog_sending">Sending…</string>
