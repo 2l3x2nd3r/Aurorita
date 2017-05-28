@@ -1,5 +1,9 @@
 <resources>
+<<<<<<< HEAD
     <string name="app_name">Aurorita</string>
+=======
+    <string name="app_name">Rubrics</string>
+>>>>>>> 72e5a34ac8ede591321e3418a2b915ed49ecd1f1
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
