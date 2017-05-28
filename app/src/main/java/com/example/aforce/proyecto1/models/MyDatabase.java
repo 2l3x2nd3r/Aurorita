@@ -5,5 +5,8 @@ package com.example.aforce.proyecto1.models;
  */
 
 public class MyDatabase {
-    public static final String NAME = "MyDataBase";
+    public static final String USUARIOS = "Usuarios";
+    public static final String RUBRICAS = "Rubricas";
+    public static final String CURSOS = "Cursos";
+    public static final String CATEGORIAS = "Categorias";
 }

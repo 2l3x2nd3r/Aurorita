@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        displaySelectedScreen(R.id.nav_courses, 0);
+        displaySelectedScreen(R.id.nav_rubrics, 0);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             int count = getFragmentManager().getBackStackEntryCount();
             String tag = fragment.getTag();
-            System.out.println(tag);
+            Log.d("back", tag);
             if (count == 0) {
                 if(tag == "Back") {
                     super.onBackPressed();
@@ -138,14 +138,12 @@ public class MainActivity extends AppCompatActivity
     Fragment fragment;
     boolean sw = false;
     private void displaySelectedScreen(int viewId, int itemId){
-
         fragment = null;
         String tag = "noBack";
 
         if(sw)
             backMenu.setVisible(false);
         sw = true;
-        Fragment fragment = null;
         Bundle bundle = null;
         switch (viewId){
             case R.id.nav_courses:
@@ -268,7 +266,7 @@ public class MainActivity extends AppCompatActivity
                 int percent = Integer.parseInt(((EditText) lls.get(i).findViewById(R.id.catrowet2)).getText().toString());
                 int elements = Integer.parseInt(((EditText) lls.get(i).findViewById(R.id.catrowet3)).getText().toString());
 
-                Category cat = new Category(name, r.getId(), percent, elements);
+                //Category cat = new Category(name, r.getId(), percent, elements);
 
             }
             displaySelectedScreen(R.id.nav_rubrics, 0);

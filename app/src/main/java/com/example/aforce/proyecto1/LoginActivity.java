@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.aforce.proyecto1.models.MyDatabase;
 import com.example.aforce.proyecto1.models.User;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -78,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
     public void afterLogin(){
         linearLoading.setVisibility(View.VISIBLE);
         btn.setEnabled(false);
-        final DatabaseReference dbReference = db.getReference("Usuarios");
+        final DatabaseReference dbReference = db.getReference(MyDatabase.USUARIOS);
         dbReference.orderByChild("email").equalTo(mAuth.getCurrentUser().getEmail()).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {

@@ -5,21 +5,21 @@ package com.example.aforce.proyecto1.models;
  */
 
 public class Rubric{
-    int id;
-    public String name;
-    public int categoryNumber;
-    public int levelNumber;
+    public String id;
+    public String nombre;
+    public int numeroDeCategorias;
+    public int numeroDeNiveles;
 
     public Rubric() {
     }
 
-    public Rubric(String name, int categoryNumber, int levelNumber) {
-        this.name = name;
-        this.categoryNumber = categoryNumber;
-        this.levelNumber = levelNumber;
+    public Rubric(String nombre, int numeroDeCategorias, int numeroDeNiveles) {
+        this.nombre = nombre;
+        this.numeroDeCategorias = numeroDeCategorias;
+        this.numeroDeNiveles = numeroDeNiveles;
     }
 
-    public int getId() {
-        return id;
+    public String getId(){
+        return this.id;
     }
 }
