@@ -4,19 +4,31 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <EditText
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:hint="Nombre"
-        android:id="@+id/etStudentName"/>
+        android:layout_height="wrap_content">
 
-    <EditText
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:hint="Nombre"
+            android:id="@+id/etStudentName"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:hint="Estado"
-        android:id="@+id/etStudentState"/>
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:hint="Estado"
+            android:id="@+id/etStudentState"/>
+
+    </android.support.design.widget.TextInputLayout>
 
     <!-- Other views -->
     <Space
