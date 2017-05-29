@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.example.aforce.proyecto1.ListAdapter;
 import com.example.aforce.proyecto1.R;
+import com.example.aforce.proyecto1.models.Course;
 import com.example.aforce.proyecto1.models.MyDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +34,7 @@ public class CoursesView extends Fragment {
     private CardView cv;
     private ListView lv;
     private ListAdapter adapter;
+    private ArrayList<Object> courses;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -41,17 +43,28 @@ public class CoursesView extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        getActivity().setTitle("Cursos");
+        cv = (CardView) view.findViewById(R.id.cvNoContent);
+        lv = (ListView) view.findViewById(R.id.lvCourses);
+        courses = new ArrayList<>();
+
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference(MyDatabase.CURSOS);
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                Object courses = dataSnapshot.getValue();
-                if(courses != null) {
-                    //Show every course
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    Course c = postSnapshot.getValue(Course.class);
+                    c.id = postSnapshot.getKey();
+                    courses.add(c);
                 }
+                if(courses.isEmpty())
+                    cv.setVisibility(View.VISIBLE);
+                adapter = new ListAdapter(getContext(), courses);
+                lv.setDivider(null);
+                lv.setAdapter(adapter);
 
             }
 
@@ -61,20 +74,6 @@ public class CoursesView extends Fragment {
                 Log.w(TAG, "Failed to read value.", databaseError.toException());
             }
         });
-
-        getActivity().setTitle("Cursos");
-
-        cv = (CardView) view.findViewById(R.id.cvNoContent);
-        lv = (ListView) view.findViewById(R.id.lvCourses);
-
-        ArrayList<Object> records = new ArrayList<>();
-
-        if(records.isEmpty())
-            cv.setVisibility(View.VISIBLE);
-
-        adapter = new ListAdapter(getContext(), records);
-        lv.setDivider(null);
-        lv.setAdapter(adapter);
     }
 
     @Nullable
