@@ -18,4 +18,5 @@ public class Rubric{
         this.numeroDeCategorias = numeroDeCategorias;
         this.numeroDeNiveles = numeroDeNiveles;
     }
+
 }

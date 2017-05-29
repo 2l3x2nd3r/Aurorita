@@ -69,8 +69,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        //displaySelectedScreen(R.id.nav_rubrics, "");
-        displaySelectedScreen(12, "-KlHv18J3ew3cKo5lmYV");
+        displaySelectedScreen(R.id.nav_rubrics, "");
+        //displaySelectedScreen(12, "-KlHv18J3ew3cKo5lmYV");
     }
 
     @Override
@@ -184,6 +184,8 @@ public class MainActivity extends AppCompatActivity
                 backMenu.setVisible(true);
                 break;
             case 12://VER RUBRICA
+                backMenu.setVisible(true);
+                tag = "Back";
                 bundle = new Bundle();
                 bundle.putString("rubricId", itemId);
                 fragment = new ShowRubricView();
@@ -213,7 +215,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void displayItemFromList(View view) {
-        String info[] = ((String) view.getTag()).split("|");
+        String info[] = view.getTag().toString().split("\\|");
         switch (info[0]){
             case "Course":
                 displaySelectedScreen(2, info[1]);

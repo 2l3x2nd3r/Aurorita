@@ -1,5 +1,6 @@
 package com.example.aforce.proyecto1.Controllers.Rubric;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -35,7 +36,6 @@ public class RubricsView extends Fragment {
     ListView lv;
     ListAdapter adapter;
     ArrayList<Object> records;
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
