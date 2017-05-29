@@ -76,7 +76,7 @@ public class ListAdapter extends BaseAdapter{
             case "Course":
                 Course Cobj = (Course) sr;
                 tvRow.setText(""+Cobj.name);
-                cardRow.setTag("Course|" + Cobj.getId());
+                cardRow.setTag("Course|" + Cobj.id);
                 break;
             case "Student":
                 Student Sobj = (Student) sr;

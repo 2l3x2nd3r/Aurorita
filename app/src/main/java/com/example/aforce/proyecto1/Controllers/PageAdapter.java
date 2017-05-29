@@ -1,9 +1,12 @@
-package com.example.aforce.proyecto1.Controllers.Course;
+package com.example.aforce.proyecto1.Controllers;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import com.example.aforce.proyecto1.Controllers.Activity.ActivitiesView;
+import com.example.aforce.proyecto1.Controllers.Student.StudentsView;
 
 /**
  * Created by mauricio on 17/04/17.

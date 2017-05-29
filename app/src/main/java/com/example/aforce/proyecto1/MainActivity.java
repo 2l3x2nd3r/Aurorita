@@ -21,10 +21,10 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.aforce.proyecto1.Controllers.Course.CoursesView;
-import com.example.aforce.proyecto1.Controllers.Course.CreateActivityView;
+import com.example.aforce.proyecto1.Controllers.Activity.CreateActivityView;
 import com.example.aforce.proyecto1.Controllers.Course.CreateCourseView;
-import com.example.aforce.proyecto1.Controllers.Course.CreateStudentView;
-import com.example.aforce.proyecto1.Controllers.Course.StudentsActivitiesContainer;
+import com.example.aforce.proyecto1.Controllers.Student.CreateStudentView;
+import com.example.aforce.proyecto1.Controllers.StudentsActivitiesContainer;
 import com.example.aforce.proyecto1.Controllers.Rubric.CreateRubricView;
 import com.example.aforce.proyecto1.Controllers.Rubric.RubricsView;
 import com.example.aforce.proyecto1.Controllers.Rubric.ShowRubricView;
@@ -33,7 +33,6 @@ import com.example.aforce.proyecto1.models.Course;
 import com.example.aforce.proyecto1.models.MyDatabase;
 import com.example.aforce.proyecto1.models.Rubric;
 import com.example.aforce.proyecto1.models.Activity;
-import com.example.aforce.proyecto1.models.Student;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -252,7 +251,12 @@ public class MainActivity extends AppCompatActivity
         EditText et = (EditText) findViewById(R.id.etCourseName);
         Course c = new Course(et.getText().toString());
 
+        final DatabaseReference dbCourses = db.getReference(MyDatabase.CURSOS);
+        String key = dbCourses.push().getKey();
+        dbCourses.child(key).setValue(c);
+        c.id = key;
         displaySelectedScreen(R.id.nav_courses, "");
+        Toast.makeText(this, "Curso creado con éxito", Toast.LENGTH_SHORT).show();
     }
 
     public void onClickCreateStudent(View view) {

@@ -42,14 +42,17 @@ public class CoursesView extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference(MyDatabase.USUARIOS);
+        databaseReference = firebaseDatabase.getReference(MyDatabase.CURSOS);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                Object value = dataSnapshot.getValue();
-                Log.d(TAG, "Value is: " + value);
+                Object courses = dataSnapshot.getValue();
+                if(courses != null) {
+                    //Show every course
+                }
+
             }
 
             @Override
