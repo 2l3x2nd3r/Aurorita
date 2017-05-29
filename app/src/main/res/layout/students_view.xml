@@ -47,18 +47,20 @@
         app:fab_labelsPosition="left">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/subscribed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="@color/white"
-            app:fab_title="Label on the right"
-            app:fab_colorPressed="@color/white_pressed"/>
+            app:fab_title="Ver inscritos"
+            app:fab_colorPressed="@color/white_pressed" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/requested"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="@color/white"
-            app:fab_title="Another one on the right"
-            app:fab_colorPressed="@color/white_pressed"/>
+            app:fab_title="Ver solicitudes"
+            app:fab_colorPressed="@color/white_pressed" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

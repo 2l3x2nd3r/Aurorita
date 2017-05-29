@@ -31,7 +31,7 @@ public class ActivitiesView extends Fragment {
 
         int itemId = getArguments().getInt("itemId");
 
-        getActivity().setTitle("Actividades");
+        getActivity().setTitle("Curso");
 
         cv = (CardView) view.findViewById(R.id.cvNoContent);
         lv = (ListView) view.findViewById(R.id.lvActivities);

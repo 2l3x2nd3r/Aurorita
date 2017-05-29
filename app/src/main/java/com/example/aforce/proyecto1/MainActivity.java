@@ -24,6 +24,7 @@ import com.example.aforce.proyecto1.Controllers.Course.CoursesView;
 import com.example.aforce.proyecto1.Controllers.Activity.CreateActivityView;
 import com.example.aforce.proyecto1.Controllers.Course.CreateCourseView;
 import com.example.aforce.proyecto1.Controllers.Student.CreateStudentView;
+import com.example.aforce.proyecto1.Controllers.Student.StudentsView;
 import com.example.aforce.proyecto1.Controllers.StudentsActivitiesContainer;
 import com.example.aforce.proyecto1.Controllers.Rubric.CreateRubricView;
 import com.example.aforce.proyecto1.Controllers.Rubric.RubricsView;
