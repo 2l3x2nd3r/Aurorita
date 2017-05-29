@@ -30,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseDatabase db;
     private static final int RC_SIGN_IN = 0;
+    private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
+    private long mBackPressed;
     Button btn;
     LinearLayout linearLoading;
     List<AuthUI.IdpConfig> providers;
@@ -48,9 +50,6 @@ public class LoginActivity extends AppCompatActivity {
             afterLogin();
         }
     }
-
-    private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
-    private long mBackPressed;
 
     @Override
     public void onBackPressed()

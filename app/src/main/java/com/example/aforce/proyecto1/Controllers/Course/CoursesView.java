@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.example.aforce.proyecto1.ListAdapter;
 import com.example.aforce.proyecto1.R;
+import com.example.aforce.proyecto1.models.MyDatabase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,7 +42,7 @@ public class CoursesView extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Usuarios");
+        databaseReference = firebaseDatabase.getReference(MyDatabase.USUARIOS);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
