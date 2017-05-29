@@ -40,37 +40,30 @@ public class RubricsView extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Rubricas");
+
         records = new ArrayList<>();
         db = FirebaseDatabase.getInstance();
+        cv = (CardView) view.findViewById(R.id.cvNoContent);
+        lv = (ListView) view.findViewById(R.id.lvRubrics);
+
         final DatabaseReference dbReference = db.getReference(MyDatabase.RUBRICAS);
         dbReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    String id = postSnapshot.getKey();
                     Rubric r = postSnapshot.getValue(Rubric.class);
-                    r.id = id;
+                    r.id = postSnapshot.getKey();
                     records.add(r);
                 }
+                if(records.isEmpty())
+                    cv.setVisibility(View.VISIBLE);
+                adapter = new ListAdapter(getContext(), records);
+                lv.setDivider(null);
+                lv.setAdapter(adapter);
             }
-
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
-
-        cv = (CardView) view.findViewById(R.id.cvNoContent);
-        lv = (ListView) view.findViewById(R.id.lvRubrics);
-
-        if(records.isEmpty()){
-            Log.e("porque", "porque mierda entro?");
-            Log.e("porque", "" + records.isEmpty());
-            cv.setVisibility(View.VISIBLE);
-        }
-        adapter = new ListAdapter(getContext(), records);
-        lv.setDivider(null);
-        lv.setAdapter(adapter);
     }
 
     @Nullable

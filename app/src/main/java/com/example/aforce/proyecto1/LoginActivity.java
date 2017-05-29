@@ -106,7 +106,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        providers.add(new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build());
         providers.add(new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build());
         startActivityForResult(AuthUI.getInstance()
                 .createSignInIntentBuilder()

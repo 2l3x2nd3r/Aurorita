@@ -65,6 +65,7 @@ public class ListAdapter extends BaseAdapter{
                 Rubric Robj = (Rubric) sr;
                 tvRow.setText(""+Robj.nombre);
                 cardRow.setTag("Rubric-" + Robj.getId());
+                Log.d("myTag", "" + cardRow.getTag());
                 break;
             case "Course":
                 Course Cobj = (Course) sr;

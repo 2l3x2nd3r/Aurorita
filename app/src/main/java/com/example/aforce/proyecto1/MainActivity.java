@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity
                 displaySelectedScreen(2, Integer.parseInt(info[1]));
                 break;
             case "Rubric":
-
+                Log.d("myTag", "si llego hasta aqui compae");
                 break;
         }
 
@@ -287,13 +287,13 @@ public class MainActivity extends AppCompatActivity
             canCreateRubric = true;
             quantity=Integer.parseInt(num);
         }
-        for(int i = 0; i < quantity; i++) {
+        for(int i = 0; i < quantity; i++){
             addCategory(i + 1);
         }
     }
 
     //--------------------------------------------------//
-    ArrayList<LinearLayout> lls = new ArrayList<LinearLayout>();
+    ArrayList<LinearLayout> lls = new ArrayList<>();
     private void addCategory(int i) {
         LayoutInflater inflater = LayoutInflater.from(this);
         LinearLayout ll = (LinearLayout) inflater.inflate(R.layout.category_row, null);
