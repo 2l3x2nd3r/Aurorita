@@ -165,6 +165,8 @@ public class MainActivity extends AppCompatActivity
                 backMenu.setVisible(true);
                 break;
             case 2: //VER CONTENEDOR ESTUDIANTES/ACTIVIDADES
+                tag = "Back";
+                backMenu.setVisible(true);
                 globalId = itemId;
                 bundle = new Bundle();
                 bundle.putString("itemId", itemId);
@@ -172,9 +174,13 @@ public class MainActivity extends AppCompatActivity
                 fragment.setArguments(bundle);
                 break;
             case 3: //CREAR ESTUDIANTE
+                tag = "Back";
+                backMenu.setVisible(true);
                 fragment = new CreateStudentView();
                 break;
             case 4: //CREAR ACTIVIDAD
+                tag = "Back";
+                backMenu.setVisible(true);
                 fragment = new CreateActivityView();
                 break;
             case 11:
@@ -262,8 +268,8 @@ public class MainActivity extends AppCompatActivity
     public void onClickCreateStudent(View view) {
         EditText etStudentName = (EditText) findViewById(R.id.etStudentName);
         EditText etStudentState = (EditText) findViewById(R.id.etStudentState);
-
         displaySelectedScreen(2, globalId);
+        Toast.makeText(this, "Estudiante creado con éxito", Toast.LENGTH_SHORT).show();
     }
 
     public void onClickCreateActividad(View view) {
@@ -271,6 +277,7 @@ public class MainActivity extends AppCompatActivity
         Activity a = new Activity(etActivityName.getText().toString(), "-asfrja", globalId);
 
         displaySelectedScreen(2, globalId);
+        Toast.makeText(this, "Actividad creada con éxito", Toast.LENGTH_SHORT).show();
     }
 
     public void onClickCreateRubric(View view) {

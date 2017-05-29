@@ -5,22 +5,18 @@ package com.example.aforce.proyecto1.models;
  */
 
 public class Student{
-    int id;
+    public int id;
     public String name;
-    public int course_id;
+    public String course_id;
     public String state;
 
     public Student() {
     }
 
-    public Student(String name, int course_id, String state) {
+    public Student(String name, String course_id, String state) {
         this.name = name;
         this.course_id = course_id;
         this.state = state;
-    }
-
-    public int getId() {
-        return id;
     }
 
 }
