@@ -8,13 +8,13 @@ public class Activity {
 
     int id;
     public String name;
-    public int rubric_id;
-    public int course_id;
+    public String rubric_id;
+    public String course_id;
 
     public Activity() {
     }
 
-    public Activity(String name, int rubric_id, int course_id) {
+    public Activity(String name, String rubric_id, String course_id) {
         this.name = name;
         this.rubric_id = rubric_id;
         this.course_id = course_id;

@@ -8,28 +8,20 @@ import java.util.List;
 
 public class Category{
 
-    int id;
-    public String name;
-    public int rubric_id;
-    public int elementNumber;
-    public int percent;
-
-    List<Element> elements;
+    public String id;
+    public String nombre;
+    public String rubricaId;
+    public int numeroDeElementos;
+    public int porcentaje;
 
     public Category() {
     }
 
-    public Category(String name, int rubric_id, int elementNumber, int percent) {
-        this.name = name;
-        this.rubric_id = rubric_id;
-        this.elementNumber = elementNumber;
-        this.percent = percent;
-    }
-
-    public List<Element> dbFlowOneTwoManyUtilMethod() {
-        if (elements == null || elements.isEmpty()) {
-        }
-        return elements;
+    public Category(String nombre, String rubricaId, int numeroDeElementos, int porcentaje) {
+        this.nombre = nombre;
+        this.rubricaId = rubricaId;
+        this.numeroDeElementos = numeroDeElementos;
+        this.porcentaje = porcentaje;
     }
 
 }

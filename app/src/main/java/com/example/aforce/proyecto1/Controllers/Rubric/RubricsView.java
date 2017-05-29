@@ -40,14 +40,12 @@ public class RubricsView extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getActivity().setTitle("Rubricas");
-
-        records = new ArrayList<>();
         db = FirebaseDatabase.getInstance();
         cv = (CardView) view.findViewById(R.id.cvNoContent);
         lv = (ListView) view.findViewById(R.id.lvRubrics);
-
+        records = new ArrayList<>();
         final DatabaseReference dbReference = db.getReference(MyDatabase.RUBRICAS);
-        dbReference.addValueEventListener(new ValueEventListener() {
+        dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {

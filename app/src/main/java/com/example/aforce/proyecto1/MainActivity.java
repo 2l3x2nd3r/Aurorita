@@ -27,14 +27,18 @@ import com.example.aforce.proyecto1.Controllers.Course.CreateStudentView;
 import com.example.aforce.proyecto1.Controllers.Course.StudentsActivitiesContainer;
 import com.example.aforce.proyecto1.Controllers.Rubric.CreateRubricView;
 import com.example.aforce.proyecto1.Controllers.Rubric.RubricsView;
+import com.example.aforce.proyecto1.Controllers.Rubric.ShowRubricView;
 import com.example.aforce.proyecto1.models.Category;
 import com.example.aforce.proyecto1.models.Course;
+import com.example.aforce.proyecto1.models.MyDatabase;
 import com.example.aforce.proyecto1.models.Rubric;
 import com.example.aforce.proyecto1.models.Activity;
 import com.example.aforce.proyecto1.models.Student;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -45,7 +49,8 @@ public class MainActivity extends AppCompatActivity
     private long mBackPressed;
     MenuItem backMenu;
     boolean canCreateRubric = false;
-    private int globalId = 0;
+    private String globalId;
+    private FirebaseDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        db = FirebaseDatabase.getInstance();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -62,7 +69,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        displaySelectedScreen(R.id.nav_rubrics, 0);
+        //displaySelectedScreen(R.id.nav_rubrics, "");
+        displaySelectedScreen(12, "-KlHv18J3ew3cKo5lmYV");
     }
 
     @Override
@@ -137,7 +145,7 @@ public class MainActivity extends AppCompatActivity
 
     Fragment fragment;
     boolean sw = false;
-    private void displaySelectedScreen(int viewId, int itemId){
+    private void displaySelectedScreen(int viewId, String itemId){
         fragment = null;
         String tag = "noBack";
 
@@ -160,7 +168,7 @@ public class MainActivity extends AppCompatActivity
             case 2: //VER CONTENEDOR ESTUDIANTES/ACTIVIDADES
                 globalId = itemId;
                 bundle = new Bundle();
-                bundle.putInt("itemId", itemId);
+                bundle.putString("itemId", itemId);
                 fragment = new StudentsActivitiesContainer();
                 fragment.setArguments(bundle);
                 break;
@@ -174,6 +182,12 @@ public class MainActivity extends AppCompatActivity
                 fragment = new CreateRubricView();
                 tag = "Back";
                 backMenu.setVisible(true);
+                break;
+            case 12://VER RUBRICA
+                bundle = new Bundle();
+                bundle.putString("rubricId", itemId);
+                fragment = new ShowRubricView();
+                fragment.setArguments(bundle);
                 break;
         }
 
@@ -193,19 +207,19 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        displaySelectedScreen(id, 0);
+        displaySelectedScreen(id, "");
 
         return true;
     }
 
     public void displayItemFromList(View view) {
-        String info[] = ((String) view.getTag()).split("-");
+        String info[] = ((String) view.getTag()).split("|");
         switch (info[0]){
             case "Course":
-                displaySelectedScreen(2, Integer.parseInt(info[1]));
+                displaySelectedScreen(2, info[1]);
                 break;
             case "Rubric":
-                Log.d("myTag", "si llego hasta aqui compae");
+                displaySelectedScreen(12, info[1]);
                 break;
         }
 
@@ -214,19 +228,19 @@ public class MainActivity extends AppCompatActivity
     //---------------------Display things---------------//
 
     public void onClickCreateCourseView(View view) {
-        displaySelectedScreen(1, 0);
+        displaySelectedScreen(1, "");
     }
 
     public void onClickCreateRubricView(View view) {
-        displaySelectedScreen(11, 0);
+        displaySelectedScreen(11, "");
     }
 
     public void onClickCreateStudentView(View view) {
-        displaySelectedScreen(3, 0);
+        displaySelectedScreen(3, "");
     }
 
     public void onClickCreateActividadView(View view) {
-        displaySelectedScreen(4, 0);
+        displaySelectedScreen(4, "");
     }
     //--------------------------------------------------//
 
@@ -236,7 +250,7 @@ public class MainActivity extends AppCompatActivity
         EditText et = (EditText) findViewById(R.id.etCourseName);
         Course c = new Course(et.getText().toString());
 
-        displaySelectedScreen(R.id.nav_courses, 0);
+        displaySelectedScreen(R.id.nav_courses, "");
     }
 
     public void onClickCreateStudent(View view) {
@@ -248,28 +262,35 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickCreateActividad(View view) {
         EditText etActivityName = (EditText) findViewById(R.id.etActivityName);
-        Activity a = new Activity(etActivityName.getText().toString(), 1, globalId);
+        Activity a = new Activity(etActivityName.getText().toString(), "-asfrja", globalId);
 
         displaySelectedScreen(2, globalId);
     }
 
     public void onClickCreateRubric(View view) {
         if(canCreateRubric) {
+            final DatabaseReference dbRubrics = db.getReference(MyDatabase.RUBRICAS);
+            final DatabaseReference dbCategories = db.getReference(MyDatabase.CATEGORIAS);
             String nam = ((EditText) findViewById(R.id.crvEt1)).getText().toString();
             int cats = Integer.parseInt(((EditText) findViewById(R.id.crvEt2)).getText().toString());
             int lvls = Integer.parseInt(((EditText) findViewById(R.id.crvEt3)).getText().toString());
 
             Rubric r = new Rubric(nam, cats, lvls);
+            String key = dbRubrics.push().getKey();
+            dbRubrics.child(key).setValue(r);
+            r.id = key;
 
             for (int i = 0; i < lls.size(); i++) {
                 String name = ((EditText) lls.get(i).findViewById(R.id.catrowet1)).getText().toString();
-                int percent = Integer.parseInt(((EditText) lls.get(i).findViewById(R.id.catrowet2)).getText().toString());
-                int elements = Integer.parseInt(((EditText) lls.get(i).findViewById(R.id.catrowet3)).getText().toString());
+                EditText percent = (EditText) lls.get(i).findViewById(R.id.catrowet2);
+                EditText elements = (EditText) lls.get(i).findViewById(R.id.catrowet3);
+                int porcentaje = Integer.parseInt(percent.getText().toString());
+                int elementos = Integer.parseInt(elements.getText().toString());
 
-                //Category cat = new Category(name, r.getId(), percent, elements);
-
+                Category cat = new Category(name, r.id, porcentaje, elementos);
+                dbCategories.push().setValue(cat);
             }
-            displaySelectedScreen(R.id.nav_rubrics, 0);
+            displaySelectedScreen(R.id.nav_rubrics, "");
             Toast.makeText(this, "Rubrica creada con exito", Toast.LENGTH_SHORT).show();
         }else{
             Toast.makeText(this, "Debes agregar almenos una categoria", Toast.LENGTH_SHORT).show();

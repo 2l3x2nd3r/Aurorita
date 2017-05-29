@@ -18,8 +18,4 @@ public class Rubric{
         this.numeroDeCategorias = numeroDeCategorias;
         this.numeroDeNiveles = numeroDeNiveles;
     }
-
-    public String getId(){
-        return this.id;
-    }
 }
