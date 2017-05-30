@@ -7,11 +7,35 @@
     android:padding="16dp">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="4.94"
+            android:text="Lista de categorias"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/lvCategories"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4.94" />
+    </LinearLayout>
+
     <android.support.v7.widget.CardView
         android:id="@+id/cvNoContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:visibility="invisible">
 
         <TextView
@@ -23,11 +47,5 @@
             android:textAlignment="center" />
 
     </android.support.v7.widget.CardView>
-
-    <ListView
-        android:id="@+id/lvCategories"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="4.94" />
 
 </android.support.design.widget.CoordinatorLayout>

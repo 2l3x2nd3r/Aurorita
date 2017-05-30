@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.example.aforce.proyecto1.models.Activity;
 import com.example.aforce.proyecto1.models.Category;
 import com.example.aforce.proyecto1.models.Course;
+import com.example.aforce.proyecto1.models.Element;
 import com.example.aforce.proyecto1.models.Rubric;
 import com.example.aforce.proyecto1.models.Student;
 
@@ -72,6 +73,11 @@ public class ListAdapter extends BaseAdapter{
                 Category Caobj = (Category) sr;
                 tvRow.setText(Caobj.nombre);
                 cardRow.setTag("Category|" + Caobj.id);
+                break;
+            case "Element":
+                Element Eobj = (Element) sr;
+                tvRow.setText(Eobj.nombre);
+                cardRow.setTag("Element|" + Eobj.id);
                 break;
             case "Course":
                 Course Cobj = (Course) sr;

@@ -6,11 +6,36 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="4.94"
+            android:text="Lista de Elementos"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/lvCategories"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4.94" />
+    </LinearLayout>
+
     <android.support.v7.widget.CardView
         android:id="@+id/cvNoContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:visibility="invisible">
 
         <TextView
@@ -23,12 +48,6 @@
 
     </android.support.v7.widget.CardView>
 
-    <ListView
-        android:id="@+id/lvRubrics"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="4.94" />
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -36,7 +55,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/green"
-        android:onClick="onClickCreateRubricView"
+        android:onClick="onClickCreateElementView"
         android:tint="@android:color/white"
         app:srcCompat="@android:drawable/ic_input_add" />
 

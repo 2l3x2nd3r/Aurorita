@@ -7,16 +7,18 @@ package com.example.aforce.proyecto1.models;
 
 public class Element{
 
-    int id;
-    public String name;
-    public int category_id;
+    public String id;
+    public String nombre;
+    public String categoriaId;
+    public int porcentaje;
 
 
     public Element() {
     }
 
-    public Element(String name, int category_id) {
-        this.name = name;
-        this.category_id = category_id;
+    public Element(String nombre, String categoriaId, int porcentaje) {
+        this.nombre = nombre;
+        this.categoriaId = categoriaId;
+        this.porcentaje = porcentaje;
     }
 }

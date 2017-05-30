@@ -11,16 +11,14 @@ public class Category{
     public String id;
     public String nombre;
     public String rubricaId;
-    public int numeroDeElementos;
     public int porcentaje;
 
     public Category() {
     }
 
-    public Category(String nombre, String rubricaId, int numeroDeElementos, int porcentaje) {
+    public Category(String nombre, String rubricaId, int porcentaje) {
         this.nombre = nombre;
         this.rubricaId = rubricaId;
-        this.numeroDeElementos = numeroDeElementos;
         this.porcentaje = porcentaje;
     }
 

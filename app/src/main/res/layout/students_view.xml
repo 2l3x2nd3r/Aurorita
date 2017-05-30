@@ -50,17 +50,17 @@
             android:id="@+id/subscribed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/white"
-            app:fab_title="Ver inscritos"
-            app:fab_colorPressed="@color/white_pressed" />
+            app:fab_colorNormal="@color/green"
+            app:fab_colorPressed="@android:color/holo_green_dark"
+            app:fab_title="Ver inscritos" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/requested"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:fab_colorNormal="@color/white"
-            app:fab_title="Ver solicitudes"
-            app:fab_colorPressed="@color/white_pressed" />
+            app:fab_colorNormal="@color/tw__blue_default"
+            app:fab_colorPressed="@color/tw__blue_pressed"
+            app:fab_title="Ver solicitudes" />
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 

@@ -1,5 +1,8 @@
 package com.example.aforce.proyecto1;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +23,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.aforce.proyecto1.Controllers.Category.ShowCategoryView;
 import com.example.aforce.proyecto1.Controllers.Course.CoursesView;
 import com.example.aforce.proyecto1.Controllers.Activity.CreateActivityView;
 import com.example.aforce.proyecto1.Controllers.Course.CreateCourseView;
@@ -31,6 +35,7 @@ import com.example.aforce.proyecto1.Controllers.Rubric.RubricsView;
 import com.example.aforce.proyecto1.Controllers.Rubric.ShowRubricView;
 import com.example.aforce.proyecto1.models.Category;
 import com.example.aforce.proyecto1.models.Course;
+import com.example.aforce.proyecto1.models.Element;
 import com.example.aforce.proyecto1.models.MyDatabase;
 import com.example.aforce.proyecto1.models.Rubric;
 import com.example.aforce.proyecto1.models.Activity;
@@ -114,17 +119,13 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            int count = getFragmentManager().getBackStackEntryCount();
-            String tag = fragment.getTag();
-            Log.d("back", tag);
-            if (count == 0) {
-                if(tag == "Back") {
-                    super.onBackPressed();
-                    backMenu.setVisible(false);
-                }
-                //additional code
+            int count = getSupportFragmentManager().getBackStackEntryCount();
+            Log.d("Back", ""+count);
+            if (count == 2) {
+                getSupportFragmentManager().popBackStack();
+                backMenu.setVisible(false);
             } else {
-                getFragmentManager().popBackStack();
+                getSupportFragmentManager().popBackStack();
             }
         }
 
@@ -144,14 +145,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     Fragment fragment;
-    boolean sw = false;
     private void displaySelectedScreen(int viewId, String itemId){
         fragment = null;
         String tag = "noBack";
-
-        if(sw)
-            backMenu.setVisible(false);
-        sw = true;
         Bundle bundle = null;
         switch (viewId){
             case R.id.nav_courses:
@@ -197,6 +193,14 @@ public class MainActivity extends AppCompatActivity
                 fragment = new ShowRubricView();
                 fragment.setArguments(bundle);
                 break;
+            case 22://VER CATEGORIA
+                backMenu.setVisible(true);
+                tag = "Back";
+                bundle = new Bundle();
+                bundle.putString("categoryId", itemId);
+                fragment = new ShowCategoryView();
+                fragment.setArguments(bundle);
+                break;
         }
 
         if(fragment != null){
@@ -228,6 +232,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case "Rubric":
                 displaySelectedScreen(12, info[1]);
+                break;
+            case "Category":
+                displaySelectedScreen(22, info[1]);
                 break;
         }
 
@@ -297,11 +304,14 @@ public class MainActivity extends AppCompatActivity
             for (int i = 0; i < lls.size(); i++) {
                 String name = ((EditText) lls.get(i).findViewById(R.id.catrowet1)).getText().toString();
                 EditText percent = (EditText) lls.get(i).findViewById(R.id.catrowet2);
-                EditText elements = (EditText) lls.get(i).findViewById(R.id.catrowet3);
-                int porcentaje = Integer.parseInt(percent.getText().toString());
-                int elementos = Integer.parseInt(elements.getText().toString());
+                int porcentaje;
+                try {
+                    porcentaje = Integer.parseInt(percent.getText().toString());
+                }catch (Exception e){
+                    porcentaje = 25;
+                }
 
-                Category cat = new Category(name, r.id, porcentaje, elementos);
+                Category cat = new Category(name, r.id, porcentaje);
                 dbCategories.push().setValue(cat);
             }
             displaySelectedScreen(R.id.nav_rubrics, "");
@@ -325,6 +335,44 @@ public class MainActivity extends AppCompatActivity
         for(int i = 0; i < quantity; i++){
             addCategory(i + 1);
         }
+    }
+
+    public void onClickCreateElementView(View view){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText nombre = new EditText(this);
+        nombre.setHint("Nombre");
+        layout.addView(nombre);
+
+        final EditText porcentaje = new EditText(this);
+        porcentaje.setHint("Porcentaje");
+        layout.addView(porcentaje);
+
+        alert.setMessage("Ingrese el nombre del elemento");
+        alert.setTitle("Crear Elemento");
+        alert.setView(layout);
+        alert.setPositiveButton("Crear", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String name = nombre.getText().toString();
+                String percent = porcentaje.getText().toString();
+                int porcentaje;
+                try {
+                    porcentaje = Integer.parseInt(percent);
+                }catch (Exception e){
+                    porcentaje = 25;
+                }
+                String id = ((ShowCategoryView) fragment).getCategoryId();
+                Element e = new Element(name, id, porcentaje);
+                final DatabaseReference dbElements = db.getReference(MyDatabase.ELEMENTOS);
+                dbElements.push().setValue(e);
+            }
+        });
+        alert.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {}
+        });
+        alert.show();
     }
 
     //--------------------------------------------------//
