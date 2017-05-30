@@ -42,12 +42,13 @@
         android:layout_margin="16dp"
         app:fab_addButtonColorNormal="@color/white"
         app:fab_addButtonColorPressed="@color/white_pressed"
-        app:fab_addButtonPlusIconColor="@color/half_black"
+        app:fab_addButtonPlusIconColor="@color/green"
         app:fab_labelStyle="@style/menu_labels_style"
         app:fab_labelsPosition="left">
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/subscribed"
+            android:src="@drawable/ic_subscribed_24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="@color/white"
@@ -56,6 +57,7 @@
 
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/requested"
+            android:src="@drawable/ic_requested_24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:fab_colorNormal="@color/white"
