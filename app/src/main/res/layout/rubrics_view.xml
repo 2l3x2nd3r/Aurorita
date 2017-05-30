@@ -29,15 +29,16 @@
         android:layout_height="match_parent"
         android:layout_weight="4.94" />
 
-    <android.support.design.widget.FloatingActionButton
+    <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
+        android:src="@android:drawable/ic_input_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@color/green"
         android:onClick="onClickCreateRubricView"
-        android:tint="@android:color/white"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:fab_colorNormal="@color/white"
+        app:fab_colorPressed="@color/white_pressed" />
+
 
 </android.support.design.widget.CoordinatorLayout>
