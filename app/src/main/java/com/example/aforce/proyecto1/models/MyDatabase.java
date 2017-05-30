@@ -11,4 +11,5 @@ public class MyDatabase {
     public static final String CATEGORIAS = "Categorias";
     public static final String ELEMENTOS = "Elementos";
     public static final String NIVELES = "Niveles";
+    public static final String ACTIVIDADES = "Actividades";
 }

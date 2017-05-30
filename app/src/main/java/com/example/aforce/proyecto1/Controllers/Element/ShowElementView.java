@@ -1,11 +1,10 @@
-package com.example.aforce.proyecto1.Controllers.Rubric;
+package com.example.aforce.proyecto1.Controllers.Element;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +12,9 @@ import android.widget.ListView;
 
 import com.example.aforce.proyecto1.ListAdapter;
 import com.example.aforce.proyecto1.R;
-import com.example.aforce.proyecto1.models.Category;
+import com.example.aforce.proyecto1.models.Element;
+import com.example.aforce.proyecto1.models.Level;
 import com.example.aforce.proyecto1.models.MyDatabase;
-import com.example.aforce.proyecto1.models.Rubric;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,47 +23,51 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+/**
+ * Created by AForce on 30/05/2017.
+ */
 
-public class ShowRubricView extends Fragment {
+public class ShowElementView extends Fragment {
 
     private FirebaseDatabase db;
-    Rubric r;
+    Element e;
     CardView cv;
     ListView lv;
     ListAdapter adapter;
-    String rubricId;
-    ArrayList<Object> categories;
-    public static int numeroDeNiveles;
+    String elementId;
+    ArrayList<Object> levels;
+    int numeroDeNiveles;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         db = FirebaseDatabase.getInstance();
-        final DatabaseReference dbRubrics = db.getReference(MyDatabase.RUBRICAS);
-        final DatabaseReference dbCategories = db.getReference(MyDatabase.CATEGORIAS);
-        rubricId = getArguments().getString("rubricId");
+        final DatabaseReference dbElementos = db.getReference(MyDatabase.ELEMENTOS);
+        final DatabaseReference dbNiveles = db.getReference(MyDatabase.NIVELES);
+        elementId = getArguments().getString("elementId");
         cv = (CardView) view.findViewById(R.id.cvNoContent);
-        lv = (ListView) view.findViewById(R.id.lvCategories);
+        lv = (ListView) view.findViewById(R.id.lvLevels);
 
-        dbRubrics.child(rubricId).addListenerForSingleValueEvent(new ValueEventListener() {
+        dbElementos.child(elementId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                r = dataSnapshot.getValue(Rubric.class);
-                r.id = rubricId;
-                numeroDeNiveles = r.numeroDeNiveles;
-                getActivity().setTitle(r.nombre);
-                dbCategories.orderByChild("rubricaId").equalTo(r.id).addValueEventListener(new ValueEventListener() {
+                e = dataSnapshot.getValue(Element.class);
+                e.id = elementId;
+                getActivity().setTitle(e.nombre);
+                dbNiveles.orderByChild("elementoId").equalTo(e.id).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        categories = new ArrayList<>();
+                        levels = new ArrayList<>();
+                        numeroDeNiveles = 0;
                         for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                            Category c = postSnapshot.getValue(Category.class);
-                            c.id = postSnapshot.getKey();
-                            categories.add(c);
+                            Level l = postSnapshot.getValue(Level.class);
+                            l.id = postSnapshot.getKey();
+                            levels.add(l);
+                            numeroDeNiveles++;
                         }
-                        if(categories.isEmpty())
+                        if(levels.isEmpty())
                             cv.setVisibility(View.VISIBLE);
-                        adapter = new ListAdapter(getContext(), categories);
+                        adapter = new ListAdapter(getContext(), levels);
                         lv.setDivider(null);
                         lv.setAdapter(adapter);
                     }
@@ -77,11 +80,14 @@ public class ShowRubricView extends Fragment {
         });
     }
 
+    public String getElementId(){
+        return elementId;
+    }
+    public int getLevelCount(){ return numeroDeNiveles;}
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.show_rubric_view, container, false);
+        return inflater.inflate(R.layout.show_element_view, container, false);
     }
-
-
 }

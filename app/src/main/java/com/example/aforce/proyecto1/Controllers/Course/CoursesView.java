@@ -46,15 +46,13 @@ public class CoursesView extends Fragment {
         getActivity().setTitle("Cursos");
         cv = (CardView) view.findViewById(R.id.cvNoContent);
         lv = (ListView) view.findViewById(R.id.lvCourses);
-        courses = new ArrayList<>();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference(MyDatabase.CURSOS);
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
+                courses = new ArrayList<>();
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     Course c = postSnapshot.getValue(Course.class);
                     c.id = postSnapshot.getKey();
@@ -65,7 +63,6 @@ public class CoursesView extends Fragment {
                 adapter = new ListAdapter(getContext(), courses);
                 lv.setDivider(null);
                 lv.setAdapter(adapter);
-
             }
 
             @Override

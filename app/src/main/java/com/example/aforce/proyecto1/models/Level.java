@@ -6,15 +6,15 @@ package com.example.aforce.proyecto1.models;
 
 public class Level{
 
-    int id;
-    public String name;
-    public int element_id;
+    public String id;
+    public String nombre;
+    public String elementoId;
 
     public Level() {
     }
 
-    public Level(String name, int element_id) {
-        this.name = name;
-        this.element_id = element_id;
+    public Level(String nombre, String elementoId) {
+        this.nombre = nombre;
+        this.elementoId = elementoId;
     }
 }

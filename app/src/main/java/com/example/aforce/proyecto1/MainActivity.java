@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -27,6 +28,7 @@ import com.example.aforce.proyecto1.Controllers.Category.ShowCategoryView;
 import com.example.aforce.proyecto1.Controllers.Course.CoursesView;
 import com.example.aforce.proyecto1.Controllers.Activity.CreateActivityView;
 import com.example.aforce.proyecto1.Controllers.Course.CreateCourseView;
+import com.example.aforce.proyecto1.Controllers.Element.ShowElementView;
 import com.example.aforce.proyecto1.Controllers.Student.CreateStudentView;
 import com.example.aforce.proyecto1.Controllers.Student.StudentsView;
 import com.example.aforce.proyecto1.Controllers.StudentsActivitiesContainer;
@@ -36,6 +38,7 @@ import com.example.aforce.proyecto1.Controllers.Rubric.ShowRubricView;
 import com.example.aforce.proyecto1.models.Category;
 import com.example.aforce.proyecto1.models.Course;
 import com.example.aforce.proyecto1.models.Element;
+import com.example.aforce.proyecto1.models.Level;
 import com.example.aforce.proyecto1.models.MyDatabase;
 import com.example.aforce.proyecto1.models.Rubric;
 import com.example.aforce.proyecto1.models.Activity;
@@ -146,15 +149,25 @@ public class MainActivity extends AppCompatActivity
 
     Fragment fragment;
     private void displaySelectedScreen(int viewId, String itemId){
+        FragmentManager fm = getSupportFragmentManager();
         fragment = null;
         String tag = "noBack";
         Bundle bundle = null;
+        int count = fm.getBackStackEntryCount();
         switch (viewId){
             case R.id.nav_courses:
+                for(int i = 0; i < count; ++i) {
+                    fm.popBackStack();
+                }
                 fragment = new CoursesView();
+                try{backMenu.setVisible(false);}catch (Exception e){}
                 break;
             case R.id.nav_rubrics:
+                for(int i = 0; i < count; ++i) {
+                    fm.popBackStack();
+                }
                 fragment = new RubricsView();
+                try{backMenu.setVisible(false);}catch (Exception e){}
                 break;
             case 1: //CREAR CURSO
                 fragment = new CreateCourseView();
@@ -201,6 +214,14 @@ public class MainActivity extends AppCompatActivity
                 fragment = new ShowCategoryView();
                 fragment.setArguments(bundle);
                 break;
+            case 32://VER ELEMENTO
+                backMenu.setVisible(true);
+                tag = "Back";
+                bundle = new Bundle();
+                bundle.putString("elementId", itemId);
+                fragment = new ShowElementView();
+                fragment.setArguments(bundle);
+                break;
         }
 
         if(fragment != null){
@@ -236,6 +257,9 @@ public class MainActivity extends AppCompatActivity
             case "Category":
                 displaySelectedScreen(22, info[1]);
                 break;
+            case "Element":
+                displaySelectedScreen(32, info[1]);
+                break;
         }
 
     }
@@ -243,7 +267,29 @@ public class MainActivity extends AppCompatActivity
     //---------------------Display things---------------//
 
     public void onClickCreateCourseView(View view) {
-        displaySelectedScreen(1, "");
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText nombre = new EditText(this);
+        nombre.setHint("Nombre");
+        layout.addView(nombre);
+
+        alert.setMessage("Ingrese el nombre del curso");
+        alert.setTitle("Crear curso");
+        alert.setView(layout);
+        alert.setPositiveButton("Crear", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            String name = nombre.getText().toString();
+            Course c = new Course(name);
+            final DatabaseReference dbCourses = db.getReference(MyDatabase.CURSOS);
+            dbCourses.push().setValue(c);
+            }
+        });
+        alert.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {}
+        });
+        alert.show();
     }
 
     public void onClickCreateRubricView(View view) {
@@ -373,6 +419,37 @@ public class MainActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int whichButton) {}
         });
         alert.show();
+    }
+
+    public void onClickCreateLevelView(View view){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+
+        final EditText nombre = new EditText(this);
+        nombre.setHint("Nombre");
+        layout.addView(nombre);
+
+        alert.setMessage("Ingrese el nombre del nivel");
+        alert.setTitle("Crear nivel");
+        alert.setView(layout);
+        alert.setPositiveButton("Crear", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                String name = nombre.getText().toString();
+                String id = ((ShowElementView) fragment).getElementId();
+                Level l = new Level(name, id);
+                final DatabaseReference dbLevels = db.getReference(MyDatabase.NIVELES);
+                dbLevels.push().setValue(l);
+            }
+        });
+        alert.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {}
+        });
+
+        if( ((ShowElementView) fragment).getLevelCount() == ShowRubricView.numeroDeNiveles )
+            Toast.makeText(this, "Numero maximo de niveles creado", Toast.LENGTH_SHORT).show();
+        else
+            alert.show();
     }
 
     //--------------------------------------------------//

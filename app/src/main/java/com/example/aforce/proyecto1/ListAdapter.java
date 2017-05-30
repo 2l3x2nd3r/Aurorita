@@ -13,6 +13,7 @@ import com.example.aforce.proyecto1.models.Activity;
 import com.example.aforce.proyecto1.models.Category;
 import com.example.aforce.proyecto1.models.Course;
 import com.example.aforce.proyecto1.models.Element;
+import com.example.aforce.proyecto1.models.Level;
 import com.example.aforce.proyecto1.models.Rubric;
 import com.example.aforce.proyecto1.models.Student;
 
@@ -67,7 +68,6 @@ public class ListAdapter extends BaseAdapter{
                 Rubric Robj = (Rubric) sr;
                 tvRow.setText(Robj.nombre);
                 cardRow.setTag("Rubric|" + Robj.id);
-                Log.d("myTag", "" + cardRow.getTag());
                 break;
             case "Category":
                 Category Caobj = (Category) sr;
@@ -78,6 +78,11 @@ public class ListAdapter extends BaseAdapter{
                 Element Eobj = (Element) sr;
                 tvRow.setText(Eobj.nombre);
                 cardRow.setTag("Element|" + Eobj.id);
+                break;
+            case "Level":
+                Level Lobj = (Level) sr;
+                tvRow.setText(Lobj.nombre);
+                cardRow.setTag("Level|" + Lobj.id);
                 break;
             case "Course":
                 Course Cobj = (Course) sr;
@@ -94,7 +99,7 @@ public class ListAdapter extends BaseAdapter{
                 tvRow.setText(""+Aobj.name);
                 cardRow.setTag("Activity|" +Aobj.getId());
         }
-
+        Log.d("myTag", "" + cardRow.getTag());
         return view;
     }
 }

@@ -32,14 +32,15 @@
         android:layout_weight="4.94"
         android:padding="16dp"/>
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:src="@android:drawable/ic_input_add"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        app:backgroundTint="@color/green"
         android:onClick="onClickCreateActividadView"
-        app:fab_colorNormal="@color/white"
-        app:fab_colorPressed="@color/white_pressed" />
+        android:tint="@android:color/white"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </android.support.design.widget.CoordinatorLayout>
