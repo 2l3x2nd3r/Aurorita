@@ -1,5 +1,7 @@
 package com.example.aforce.proyecto1.Controllers.Activity;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,12 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.aforce.proyecto1.ListAdapter;
 import com.example.aforce.proyecto1.R;
 import com.example.aforce.proyecto1.models.Activity;
-import com.example.aforce.proyecto1.models.Course;
 import com.example.aforce.proyecto1.models.MyDatabase;
+import com.example.aforce.proyecto1.models.User;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,69 +26,63 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.facebook.login.widget.ProfilePictureView.TAG;
 
-/**
- * Created by mauricio on 17/04/17.
- */
-
-public class ActivitiesView extends Fragment {
-
-    private CardView cv;
-    private ListView lv;
-    private ListAdapter adapter;
-    private ArrayList<Object> activities;
+public class ShowActivityView extends Fragment {
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+
+    private TextView tv;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        int itemId = getArguments().getInt("itemId");
+        //For now I'm gonna filter from users
 
-        getActivity().setTitle("Curso");
+        String itemId = getArguments().getString("activityId");
 
-        cv = (CardView) view.findViewById(R.id.cvNoContent);
-        lv = (ListView) view.findViewById(R.id.lvActivities);
-        activities = new ArrayList<>();
+        tv = (TextView) view.findViewById(R.id.ElpropioTextView);
 
+        getActivity().setTitle("Actividades");
 
         firebaseDatabase = FirebaseDatabase.getInstance();
+        //TODO: change USUARIOS TO ESTUDIANTES
         databaseReference = firebaseDatabase.getReference(MyDatabase.ACTIVIDADES);
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.orderByKey().equalTo(itemId).addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    Activity a = postSnapshot.getValue(Activity.class);
-                    a.id = postSnapshot.getKey();
-                    activities.add(a);
-                }
-                if(activities.isEmpty())
-                    cv.setVisibility(View.VISIBLE);
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Activity a = dataSnapshot.getValue(Activity.class);
+                a.id = dataSnapshot.getKey();
+                tv.setText("Id: " + a.id + ", Course Id:" + a.course_id + ", Rubric Id: " + a.rubric_id + ", Name: " + a.name);
+            }
 
-                adapter = new ListAdapter(getContext(), activities);
-                lv.setDivider(null);
-                lv.setAdapter(adapter);
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", databaseError.toException());
+
             }
         });
-
     }
-    @Nullable
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activities_view, container, false);
+        return inflater.inflate(R.layout.show_activity_view, container, false);
     }
 }

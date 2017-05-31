@@ -60,6 +60,7 @@ public class StudentsView extends Fragment implements View.OnClickListener {
         students = new ArrayList<>();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
+        //TODO: change USUARIOS TO ESTUDIANTES
         databaseReference = firebaseDatabase.getReference(MyDatabase.USUARIOS);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

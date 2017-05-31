@@ -16,6 +16,7 @@ import com.example.aforce.proyecto1.models.Element;
 import com.example.aforce.proyecto1.models.Level;
 import com.example.aforce.proyecto1.models.Rubric;
 import com.example.aforce.proyecto1.models.Student;
+import com.example.aforce.proyecto1.models.User;
 
 import java.util.ArrayList;
 
@@ -93,6 +94,11 @@ public class ListAdapter extends BaseAdapter{
                 Student Sobj = (Student) sr;
                 tvRow.setText(""+Sobj.name);
                 cardRow.setTag("Student|" + Sobj.id);
+                break;
+            case "User":
+                User Uobj = (User) sr;
+                tvRow.setText(""+Uobj.email);
+                cardRow.setTag("User|" + Uobj.uid);
                 break;
             case "Activity":
                 Activity Aobj = (Activity) sr;

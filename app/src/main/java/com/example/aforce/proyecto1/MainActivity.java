@@ -28,6 +28,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.aforce.proyecto1.Controllers.Activity.ShowActivityView;
 import com.example.aforce.proyecto1.Controllers.Category.ShowCategoryView;
 import com.example.aforce.proyecto1.Controllers.Course.CoursesView;
 import com.example.aforce.proyecto1.Controllers.Activity.CreateActivityView;
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        displaySelectedScreen(R.id.nav_rubrics, "");
+        displaySelectedScreen(R.id.nav_courses, "");
         //displaySelectedScreen(12, "-KlHv18J3ew3cKo5lmYV");
     }
 
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity
                 finish();
                 return;
             }
-            else { Toast.makeText(getBaseContext(), "Unde de nuevo para salir", Toast.LENGTH_SHORT).show(); }
+            else { Toast.makeText(getBaseContext(), "Presione nuevamente para salir", Toast.LENGTH_SHORT).show(); }
 
             mBackPressed = System.currentTimeMillis();
         }
@@ -226,6 +227,14 @@ public class MainActivity extends AppCompatActivity
                 fragment = new ShowElementView();
                 fragment.setArguments(bundle);
                 break;
+            case 42: //ACTIVIDAD
+                backMenu.setVisible(true);
+                tag = "Back";
+                bundle = new Bundle();
+                bundle.putString("activityId", itemId);
+                fragment = new ShowActivityView();
+                fragment.setArguments(bundle);
+                break;
         }
 
         if(fragment != null){
@@ -264,6 +273,9 @@ public class MainActivity extends AppCompatActivity
             case "Element":
                 displaySelectedScreen(32, info[1]);
                 break;
+            case "Activity":
+                displaySelectedScreen(42, info[1]);
+                break;
         }
 
     }
@@ -274,9 +286,11 @@ public class MainActivity extends AppCompatActivity
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(50, 0, 50, 0);
 
         final EditText nombre = new EditText(this);
         nombre.setHint("Nombre");
+
 
         final TextInputLayout etWrapper = new TextInputLayout(this);
         etWrapper.addView(nombre);
