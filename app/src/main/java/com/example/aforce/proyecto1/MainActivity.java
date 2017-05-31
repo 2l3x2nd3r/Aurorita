@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -22,7 +23,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.aforce.proyecto1.Controllers.Category.ShowCategoryView;
@@ -274,17 +277,25 @@ public class MainActivity extends AppCompatActivity
 
         final EditText nombre = new EditText(this);
         nombre.setHint("Nombre");
-        layout.addView(nombre);
+
+        final TextInputLayout etWrapper = new TextInputLayout(this);
+        etWrapper.addView(nombre);
+
+        final Switch sw = new Switch(this);
+        sw.setText("Visible");
+
+        layout.addView(etWrapper);
+        layout.addView(sw);
 
         alert.setMessage("Ingrese el nombre del curso");
         alert.setTitle("Crear curso");
         alert.setView(layout);
         alert.setPositiveButton("Crear", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-            String name = nombre.getText().toString();
-            Course c = new Course(name);
-            final DatabaseReference dbCourses = db.getReference(MyDatabase.CURSOS);
-            dbCourses.push().setValue(c);
+                String name = nombre.getText().toString();
+                Course c = new Course(name, sw.isChecked());
+                final DatabaseReference dbCourses = db.getReference(MyDatabase.CURSOS);
+                dbCourses.push().setValue(c);
             }
         });
         alert.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -310,7 +321,8 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickCreateCourse(View view) {
         EditText et = (EditText) findViewById(R.id.etCourseName);
-        Course c = new Course(et.getText().toString());
+        Switch sw = (Switch) findViewById(R.id.swVisible);
+        Course c = new Course(et.getText().toString(), sw.isChecked());
 
         final DatabaseReference dbCourses = db.getReference(MyDatabase.CURSOS);
         String key = dbCourses.push().getKey();

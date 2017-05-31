@@ -10,12 +10,14 @@ public class Course {
 
     public String id;
     public String name;
+    public boolean visible;
 
     public Course() {
     }
 
-    public Course(String name) {
+    public Course(String name, boolean visible) {
         this.name = name;
+        this.visible = visible;
     }
 
 }
