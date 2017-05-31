@@ -6,7 +6,7 @@ package com.example.aforce.proyecto1.models;
 
 public class Activity {
 
-    int id;
+    public String id;
     public String name;
     public String rubric_id;
     public String course_id;
@@ -25,7 +25,7 @@ public class Activity {
         return id + " " + name;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 }

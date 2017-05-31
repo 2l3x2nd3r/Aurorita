@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.aforce.proyecto1.Controllers.Category.ShowCategoryView;
@@ -328,7 +329,14 @@ public class MainActivity extends AppCompatActivity
 
     public void onClickCreateActividad(View view) {
         EditText etActivityName = (EditText) findViewById(R.id.etActivityName);
-        Activity a = new Activity(etActivityName.getText().toString(), "-asfrja", globalId);
+        Spinner spRubrics = (Spinner) findViewById(R.id.spRubrics);
+        final DatabaseReference dbActivities = db.getReference(MyDatabase.ACTIVIDADES);
+        String key = dbActivities.push().getKey();
+
+        Rubric r = (Rubric) spRubrics.getSelectedItem();
+        Activity a = new Activity(etActivityName.getText().toString(), r.id, globalId);
+        a.id = key;
+        dbActivities.child(key).setValue(a);
 
         displaySelectedScreen(2, globalId);
         Toast.makeText(this, "Actividad creada con éxito", Toast.LENGTH_SHORT).show();

@@ -19,4 +19,8 @@ public class Rubric{
         this.numeroDeNiveles = numeroDeNiveles;
     }
 
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

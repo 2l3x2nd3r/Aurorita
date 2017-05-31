@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp">
@@ -16,6 +17,15 @@
             android:id="@+id/etActivityName"/>
 
     </android.support.design.widget.TextInputLayout>
+
+    <fr.ganfra.materialspinner.MaterialSpinner
+        android:id="@+id/spRubrics"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ms_hint="Rubrica"
+        app:ms_floatingLabelText="Rubrica"
+        app:ms_enableFloatingLabel="true"
+        />
 
     <!-- Other views -->
     <Space
