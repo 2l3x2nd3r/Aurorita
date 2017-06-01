@@ -17,4 +17,9 @@ public class Level{
         this.nombre = nombre;
         this.elementoId = elementoId;
     }
+
+    @Override
+    public String toString(){
+        return nombre;
+    }
 }
