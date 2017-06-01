@@ -260,6 +260,7 @@ public class MainActivity extends AppCompatActivity
 
     public void displayItemFromList(View view) {
         String info[] = view.getTag().toString().split("\\|");
+        Log.d("myInfo", info[1]);
         switch (info[0]){
             case "Course":
                 displaySelectedScreen(2, info[1]);

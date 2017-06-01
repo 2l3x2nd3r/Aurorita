@@ -31,7 +31,7 @@ public class StudentsActivitiesContainer extends Fragment {
 
         View inflatedView = inflater.inflate(R.layout.students_activities_container_view, container, false);
 
-        int itemId = getArguments().getInt("itemId");
+        String itemId = getArguments().getString("itemId");
 
         TabLayout tabLayout = (TabLayout) inflatedView.findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Estudiantes"));

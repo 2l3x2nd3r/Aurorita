@@ -3,6 +3,7 @@ package com.example.aforce.proyecto1.Controllers.Student;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -51,7 +52,7 @@ public class StudentsView extends Fragment implements View.OnClickListener {
 
         //For now I'm gonna filter from users
 
-        int itemId = getArguments().getInt("itemId");
+        String itemId = getArguments().getString("itemId");
 
         getActivity().setTitle("Estudiantes");
 
@@ -60,33 +61,10 @@ public class StudentsView extends Fragment implements View.OnClickListener {
         students = new ArrayList<>();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        //TODO: change USUARIOS TO ESTUDIANTES
         databaseReference = firebaseDatabase.getReference(MyDatabase.USUARIOS);
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    User u = postSnapshot.getValue(User.class);
-                    u.uid = postSnapshot.getKey();
-                    if(u.role.equals("student")) students.add(u);
-                }
-                if(students.isEmpty())
-                    cv.setVisibility(View.VISIBLE);
-                adapter = new ListAdapter(getContext(), students);
-                lv.setDivider(null);
-                lv.setAdapter(adapter);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", databaseError.toException());
-            }
-        });
-
+        //TODO: change USUARIOS TO ESTUDIANTES
+        com.getbase.floatingactionbutton.FloatingActionButton fab = (com.getbase.floatingactionbutton.FloatingActionButton) view.findViewById(R.id.subscribed);
+        onClick(fab);
     }
 
     @Nullable
@@ -115,7 +93,7 @@ public class StudentsView extends Fragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.subscribed:
-                databaseReference.orderByChild("role").equalTo("professor").addChildEventListener(new ChildEventListener() {
+                databaseReference.orderByChild("state").equalTo("active").addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         User u = dataSnapshot.getValue(User.class);
@@ -148,7 +126,7 @@ public class StudentsView extends Fragment implements View.OnClickListener {
                 });
                 break;
             case R.id.requested:
-                databaseReference.orderByChild("role").equalTo("student").addChildEventListener(new ChildEventListener() {
+                databaseReference.orderByChild("state").equalTo("pending").addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         User u = dataSnapshot.getValue(User.class);

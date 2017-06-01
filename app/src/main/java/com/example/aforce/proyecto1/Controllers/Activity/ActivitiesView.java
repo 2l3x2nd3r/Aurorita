@@ -44,7 +44,7 @@ public class ActivitiesView extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        int itemId = getArguments().getInt("itemId");
+        String itemId = getArguments().getString("itemId");
 
         getActivity().setTitle("Curso");
 

@@ -14,9 +14,9 @@ import com.example.aforce.proyecto1.Controllers.Student.StudentsView;
 
 public class PageAdapter extends FragmentStatePagerAdapter {
     private int ntabs;
-    private int itemId;
+    private String itemId;
 
-    public PageAdapter (FragmentManager fm, int ntabs, int itemId){
+    public PageAdapter (FragmentManager fm, int ntabs, String itemId){
         super(fm);
         this.ntabs = ntabs;
         this.itemId = itemId;
@@ -26,7 +26,7 @@ public class PageAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         //Recibir el itemId de afuera
         Bundle bundle = new Bundle();
-        bundle.putInt("itemId", itemId);
+        bundle.putString("itemId", itemId);
 
         switch (position){
             case 0:
