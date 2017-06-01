@@ -1,5 +1,6 @@
 package com.example.aforce.proyecto1.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +13,8 @@ public class Category{
     public String nombre;
     public String rubricaId;
     public int porcentaje;
+
+    public ArrayList<Object> elementos;
 
     public Category() {
     }

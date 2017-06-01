@@ -1,6 +1,8 @@
 package com.example.aforce.proyecto1.models;
 
 
+import java.util.ArrayList;
+
 /**
  * Created by AForce on 24/03/2017.
  */
@@ -11,7 +13,7 @@ public class Element{
     public String nombre;
     public String categoriaId;
     public int porcentaje;
-
+    public ArrayList<Object> niveles;
 
     public Element() {
     }
