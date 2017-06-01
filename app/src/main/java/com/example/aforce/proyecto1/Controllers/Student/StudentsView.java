@@ -1,6 +1,7 @@
 package com.example.aforce.proyecto1.Controllers.Student;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringDef;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.example.aforce.proyecto1.ListAdapter;
 import com.example.aforce.proyecto1.R;
 import com.example.aforce.proyecto1.models.Course;
+import com.example.aforce.proyecto1.models.Curso_Usuario;
 import com.example.aforce.proyecto1.models.MyDatabase;
 import com.example.aforce.proyecto1.models.Student;
 import com.example.aforce.proyecto1.models.User;
@@ -44,6 +46,7 @@ public class StudentsView extends Fragment implements View.OnClickListener {
     private ListView lv;
     private ListAdapter adapter;
     private ArrayList<Object> students;
+    private ArrayList<Object> Cursos_Usuarios;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -81,44 +84,52 @@ public class StudentsView extends Fragment implements View.OnClickListener {
         return v;
     }
 
-    public void seeSubscribed() {
-        Toast.makeText(getContext(), "Test1", Toast.LENGTH_SHORT);
-    }
-
-    public void seeRequests() {
-        Toast.makeText(getContext(), "Test2", Toast.LENGTH_SHORT);
-    }
-
     @Override
     public void onClick(View v) {
+        Cursos_Usuarios = new ArrayList<>();
         students = new ArrayList<>();
 
         switch (v.getId()) {
             case R.id.subscribed:
-                databaseReference.orderByChild("cursoId").equalTo(cursoId).addChildEventListener(new ChildEventListener() {
+                databaseReference.orderByChild("cursoId").equalTo(cursoId).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        User u = dataSnapshot.getValue(User.class);
-                        u.uid = dataSnapshot.getKey();
-                        students.add(u);
-                        adapter = new ListAdapter(getContext(), students);
-                        lv.setDivider(null);
-                        lv.setAdapter(adapter);
-                    }
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                            Curso_Usuario c_u = postSnapshot.getValue(Curso_Usuario.class);
+                            if(c_u.state.equals("subscribed"))
+                                Cursos_Usuarios.add(c_u);
+                        }
 
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        if(Cursos_Usuarios.isEmpty()) {
+                            cv.setVisibility(View.VISIBLE);
+                            adapter = new ListAdapter(getContext(), students);
+                            lv.setDivider(null);
+                            lv.setAdapter(adapter);
+                        }
+                        else {
+                            cv.setVisibility(View.INVISIBLE);
+                            for(Object cu: Cursos_Usuarios) {
+                                Curso_Usuario cursoUsuario = (Curso_Usuario) cu;
+                                DatabaseReference dbUserRef = firebaseDatabase.getReference(MyDatabase.USUARIOS);
+                                dbUserRef.child(cursoUsuario.usuarioId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        User u = dataSnapshot.getValue(User.class);
+                                        students.add(u);
+                                    }
 
-                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
 
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                                    }
+                                });
+                            }
+                            if(students.isEmpty())
+                                cv.setVisibility(View.VISIBLE);
+                            adapter = new ListAdapter(getContext(), students);
+                            lv.setDivider(null);
+                            lv.setAdapter(adapter);
+                        }
                     }
 
                     @Override
@@ -128,30 +139,48 @@ public class StudentsView extends Fragment implements View.OnClickListener {
                 });
                 break;
             case R.id.requested:
-                databaseReference.orderByChild("state").equalTo("pending").addChildEventListener(new ChildEventListener() {
+                databaseReference.orderByChild("cursoId").equalTo(cursoId).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        User u = dataSnapshot.getValue(User.class);
-                        u.uid = dataSnapshot.getKey();
-                        students.add(u);
-                        adapter = new ListAdapter(getContext(), students);
-                        lv.setDivider(null);
-                        lv.setAdapter(adapter);
-                    }
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                            Curso_Usuario c_u = postSnapshot.getValue(Curso_Usuario.class);
+                            if(c_u.state.equals("requested"))
+                                Cursos_Usuarios.add(c_u);
+                        }
 
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                        if(Cursos_Usuarios.isEmpty()) {
+                            cv.setVisibility(View.VISIBLE);
+                            adapter = new ListAdapter(getContext(), students);
+                            lv.setDivider(null);
+                            lv.setAdapter(adapter);
+                        }
+                        else {
+                            cv.setVisibility(View.INVISIBLE);
+                            for(Object cu: Cursos_Usuarios) {
+                                Curso_Usuario cursoUsuario = (Curso_Usuario) cu;
+                                DatabaseReference dbUserRef = firebaseDatabase.getReference(MyDatabase.USUARIOS);
+                                dbUserRef.orderByKey().equalTo(cursoUsuario.usuarioId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                                            User u = postSnapshot.getValue(User.class);
+                                            //El id
+                                            students.add(u);
+                                        }
+                                        if(students.isEmpty())
+                                            cv.setVisibility(View.VISIBLE);
+                                        adapter = new ListAdapter(getContext(), students);
+                                        lv.setDivider(null);
+                                        lv.setAdapter(adapter);
+                                    }
 
-                    }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
 
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                                    }
+                                });
+                            }
+                        }
                     }
 
                     @Override
