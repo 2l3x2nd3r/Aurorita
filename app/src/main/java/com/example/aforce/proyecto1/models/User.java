@@ -1,10 +1,12 @@
 package com.example.aforce.proyecto1.models;
 
+import java.io.Serializable;
+
 /**
  * Created by AForce on 27/05/2017.
  */
 
-public class User {
+public class User implements Serializable {
     public String email;
     public String uid;
     public String role;

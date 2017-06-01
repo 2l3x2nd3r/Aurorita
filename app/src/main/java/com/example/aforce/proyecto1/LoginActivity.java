@@ -16,11 +16,13 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,28 +81,28 @@ public class LoginActivity extends AppCompatActivity {
         linearLoading.setVisibility(View.VISIBLE);
         btn.setEnabled(false);
         final DatabaseReference dbReference = db.getReference(MyDatabase.USUARIOS);
-        dbReference.orderByChild("email").equalTo(mAuth.getCurrentUser().getEmail()).addChildEventListener(new ChildEventListener() {
+        dbReference.orderByChild("email").equalTo(mAuth.getCurrentUser().getEmail()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                User user = dataSnapshot.getValue(User.class);
-                Intent i;
-                if(user.role == "professor"){
-                    // Iniciar actividad de profesor, obviamente no es MainActivity
-                    i = new Intent(getApplicationContext(), MainActivity.class);
-                }else{
-                    i = new Intent(getApplicationContext(), MainActivity.class);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user;
+                if (dataSnapshot.getValue() == null) {
+                    FirebaseUser fUser = mAuth.getCurrentUser();
+                    user = new User(fUser.getEmail(), fUser.getUid(), "student");
+                    dbReference.push().setValue(user);
+                } else {
+                    user = dataSnapshot.getValue(User.class);
                 }
+                Intent i;
+                i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("usuario", user);
                 startActivity(i);
                 finish();
             }
+
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {}
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
-            @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
         });
     }
 

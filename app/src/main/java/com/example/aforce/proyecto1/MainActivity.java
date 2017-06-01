@@ -47,6 +47,7 @@ import com.example.aforce.proyecto1.models.Level;
 import com.example.aforce.proyecto1.models.MyDatabase;
 import com.example.aforce.proyecto1.models.Rubric;
 import com.example.aforce.proyecto1.models.Activity;
+import com.example.aforce.proyecto1.models.User;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity
     boolean canCreateRubric = false;
     private String globalId;
     private FirebaseDatabase db;
+    public static User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         db = FirebaseDatabase.getInstance();
-
+        currentUser = (User) getIntent().getSerializableExtra("usuario");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
             this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -260,7 +262,6 @@ public class MainActivity extends AppCompatActivity
 
     public void displayItemFromList(View view) {
         String info[] = view.getTag().toString().split("\\|");
-        Log.d("myInfo", info[1]);
         switch (info[0]){
             case "Course":
                 displaySelectedScreen(2, info[1]);
