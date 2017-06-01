@@ -38,6 +38,8 @@ import static com.facebook.login.widget.ProfilePictureView.TAG;
 
 public class StudentsView extends Fragment implements View.OnClickListener {
 
+    String cursoId;
+
     private CardView cv;
     private ListView lv;
     private ListAdapter adapter;
@@ -52,7 +54,7 @@ public class StudentsView extends Fragment implements View.OnClickListener {
 
         //For now I'm gonna filter from users
 
-        String itemId = getArguments().getString("itemId");
+        cursoId = getArguments().getString("itemId");
 
         getActivity().setTitle("Estudiantes");
 
@@ -61,7 +63,7 @@ public class StudentsView extends Fragment implements View.OnClickListener {
         students = new ArrayList<>();
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference(MyDatabase.USUARIOS);
+        databaseReference = firebaseDatabase.getReference(MyDatabase.CURSO_USUARIO);
         //TODO: change USUARIOS TO ESTUDIANTES
         com.getbase.floatingactionbutton.FloatingActionButton fab = (com.getbase.floatingactionbutton.FloatingActionButton) view.findViewById(R.id.subscribed);
         onClick(fab);
@@ -93,7 +95,7 @@ public class StudentsView extends Fragment implements View.OnClickListener {
 
         switch (v.getId()) {
             case R.id.subscribed:
-                databaseReference.orderByChild("state").equalTo("active").addChildEventListener(new ChildEventListener() {
+                databaseReference.orderByChild("cursoId").equalTo(cursoId).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         User u = dataSnapshot.getValue(User.class);
